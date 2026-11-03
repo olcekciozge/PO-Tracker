@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-white border-bottom">
+<nav class="navbar navbar-expand-lg navbar-dark po-navbar">
   <div class="container">
     <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{% url 'accounts:home' %}">
       <span class="brand-mark">PO</span> PO Tracker
@@ -34,13 +34,13 @@
         </ul>
 
         <div class="d-flex align-items-center gap-2">
-          <a class="text-body text-decoration-none small" href="{% url 'accounts:profile' %}">
+          <a class="text-white text-decoration-none small" href="{% url 'accounts:profile' %}">
             {{ request.user.display_name }}
           </a>
           <span class="badge rounded-pill text-bg-light border">{{ request.user.get_role_display }}</span>
           <form action="{% url 'accounts:logout' %}" method="post" class="m-0">
             {% csrf_token %}
-            <button type="submit" class="btn btn-outline-secondary btn-sm">Çıkış</button>
+            <button type="submit" class="btn btn-outline-light btn-sm">Çıkış</button>
           </form>
         </div>
       </div>
