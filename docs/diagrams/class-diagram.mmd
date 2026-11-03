@@ -1,0 +1,89 @@
+---
+config:
+  layout: elk
+---
+classDiagram
+    direction LR
+
+    class AbstractUser {
+        <<Django>>
+        username
+        email
+        password
+        first_name
+        last_name
+        is_active
+    }
+    class User {
+        role: Role
+        student_number: str [unique, nullable]
+        department_code: str
+        is_department_head() bool
+        is_instructor() bool
+        is_student() bool
+        display_name() str
+        clean()
+    }
+    class Role {
+        <<enumeration>>
+        ADMIN
+        HEAD
+        INSTRUCTOR
+        STUDENT
+    }
+    class AuditLog {
+        action: Action
+        created_at: datetime
+        metadata: JSON
+    }
+    class ProgramOutcome {
+        code: str [unique]
+        description: text
+    }
+    class Course {
+        code: str
+        title: str
+        term: str
+    }
+    class Assessment {
+        name: str
+        weight: decimal 0-100
+    }
+    class Enrollment
+    class LearningOutcome {
+        code: str
+        description: text
+    }
+    class AssessmentLO {
+        weight: decimal 0-100
+    }
+    class LOPO {
+        weight: int 1-5
+    }
+    class Grade {
+        score: decimal 0-100
+    }
+    class ScoreEngine {
+        <<service: grades.scoring>>
+        weighted_average(pairs) float
+        lo_score(contributions, grades) float
+        po_score(lo_links, lo_scores) float
+    }
+
+    AbstractUser <|-- User
+    User ..> Role
+    User "1" --> "0..*" AuditLog : actor / target
+    User "1" --> "0..*" Course : teaches
+    User "1" --> "0..*" Enrollment : student
+    User "1" --> "0..*" Grade : student
+    Course "1" *-- "0..*" Enrollment
+    Course "1" *-- "1..*" Assessment
+    Course "1" *-- "1..*" LearningOutcome
+    Assessment "1" *-- "0..*" AssessmentLO
+    LearningOutcome "1" *-- "0..*" AssessmentLO
+    LearningOutcome "1" *-- "0..*" LOPO
+    ProgramOutcome "1" --> "0..*" LOPO
+    Assessment "1" --> "0..*" Grade
+    ScoreEngine ..> Grade : reads
+    ScoreEngine ..> AssessmentLO : reads
+    ScoreEngine ..> LOPO : reads
