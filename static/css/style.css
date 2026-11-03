@@ -1,0 +1,62 @@
+:root {
+  --po-bg: #f5f7fb;
+  --po-ink: #1c2a3f;
+  --po-muted: #586679;
+  --po-border: #e0e5ef;
+  --po-primary: #2359a6;
+  --po-primary-dark: #153f7c;
+}
+
+body {
+  background: var(--po-bg);
+  color: var(--po-ink);
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--po-primary);
+  --bs-btn-border-color: var(--po-primary);
+  --bs-btn-hover-bg: var(--po-primary-dark);
+  --bs-btn-hover-border-color: var(--po-primary-dark);
+  --bs-btn-active-bg: var(--po-primary-dark);
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--po-primary);
+  color: #fff;
+  font-size: 13px;
+}
+
+.card-po {
+  background: #fff;
+  border: 1px solid var(--po-border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.site-footer {
+  border-top: 1px solid var(--po-border);
+  background: #ffffff;
+}
+
+.brand-mark-lg {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.info-box {
+  background: var(--po-bg);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 12px;
+  color: var(--po-muted);
+  line-height: 1.5;
+}

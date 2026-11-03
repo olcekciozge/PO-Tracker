@@ -1,0 +1,51 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom">
+  <div class="container">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{% url 'accounts:home' %}">
+      <span class="brand-mark">PO</span> PO Tracker
+    </a>
+
+    {% if request.user.is_authenticated %}
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false"
+              aria-label="Menüyü aç">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav me-auto">
+          {% if request.user.is_student %}
+            {# TODO: dashboard url'leri hazır olunca href'leri değiştir #}
+            <li class="nav-item"><a class="nav-link" href="#">PO Profilim</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Notlarım</a></li>
+          {% elif request.user.is_instructor %}
+            <li class="nav-item"><a class="nav-link" href="#">Derslerim</a></li>
+          {% elif request.user.is_department_head %}
+            <li class="nav-item"><a class="nav-link" href="#">Genel Bakış</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Program Çıktıları</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Dersler</a></li>
+          {% endif %}
+
+          {% if request.user.is_superuser or request.user.role == 'admin' and request.user.is_staff or request.user.is_department_head and request.user.department_code %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'accounts:user_list' %}">Kullanıcılar</a></li>
+          {% endif %}
+          {% if request.user.is_superuser %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Yönetim Paneli</a></li>
+          {% endif %}
+        </ul>
+
+        <div class="d-flex align-items-center gap-2">
+          <a class="text-body text-decoration-none small" href="{% url 'accounts:profile' %}">
+            {{ request.user.display_name }}
+          </a>
+          <span class="badge rounded-pill text-bg-light border">{{ request.user.get_role_display }}</span>
+          <form action="{% url 'accounts:logout' %}" method="post" class="m-0">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-secondary btn-sm">Çıkış</button>
+          </form>
+        </div>
+      </div>
+    {% else %}
+      <a class="btn btn-primary btn-sm" href="{% url 'accounts:login' %}">Giriş yap</a>
+    {% endif %}
+  </div>
+</nav>
