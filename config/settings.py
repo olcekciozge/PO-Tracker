@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "courses",
     "grades",
     "outcomes",
+    "dashboard",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
