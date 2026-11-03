@@ -69,12 +69,12 @@ Example (Elif): Midterm 90, Project 80
 
 ## Project structure
 
-| App | Owner | Contents |
-|---|---|---|
+| App        | Owner | Contents |
+|------------|---|---|
 | `accounts` | C | User, roles, login, permissions |
-| `outcomes` | Rümeysa | ProgramOutcome, LearningOutcome, LOPO |
-| `courses` | Rümeysa | Course, Assessment, AssessmentLO, Enrollment |
-| `grades` | Rümeysa | Grade, score calculation |
+| `outcomes`   | Rümeysa | ProgramOutcome, LearningOutcome, LOPO, AssessmentLO |
+| `courses`    | Rümeysa | Course, Assessment, Enrollment |
+| `grades`   | Rümeysa | Grade, score calculation |
 | `dashboard` | Özge | Pages, templates, charts |
 
 Rule: work only in the apps you own; changes to someone else's app go through a pull request they review.
