@@ -1,10 +1,24 @@
+/* ===== PO Tracker renk paleti ===== */
 :root {
-  --po-bg: #f5f7fb;
-  --po-ink: #1c2a3f;
-  --po-muted: #586679;
-  --po-border: #e0e5ef;
-  --po-primary: #2359a6;
-  --po-primary-dark: #153f7c;
+  --po-bg: #f5f7fb;          /* sayfa arka planı (krem) */
+  --po-surface: #ffffff;     /* kartlar, tablolar */
+  --po-ink: #1b2646;         /* yazılar, üst menü */
+  --po-primary: #223569;     /* butonlar, bağlantılar */
+  --po-secondary: #6682b2;   /* grafikler, ikincil vurgu */
+  --po-accent: #e56a0e;      /* dikkat çeken vurgu (az kullan) */
+  --po-success: #465635;     /* başarı durumları */
+  --po-muted: #5b6170;       /* soluk yazılar */
+  --po-border: #e3dfd6;      /* kenarlıklar */
+
+  /* Bootstrap'in kendi renklerini paletimize bağlar */
+  --bs-body-bg: var(--po-bg);
+  --bs-body-color: var(--po-ink);
+  --bs-link-color: var(--po-primary);
+  --bs-link-color-rgb: 34, 53, 105;
+  --bs-link-hover-color: var(--po-ink);
+  --bs-link-hover-color-rgb: 27, 38, 70;
+  --bs-secondary-color: var(--po-muted);
+  --bs-border-color: var(--po-border);
 }
 
 body {
@@ -12,13 +26,52 @@ body {
   color: var(--po-ink);
 }
 
+/* ===== Butonlar ===== */
 .btn-primary {
   --bs-btn-bg: var(--po-primary);
   --bs-btn-border-color: var(--po-primary);
-  --bs-btn-hover-bg: var(--po-primary-dark);
-  --bs-btn-hover-border-color: var(--po-primary-dark);
-  --bs-btn-active-bg: var(--po-primary-dark);
+  --bs-btn-hover-bg: var(--po-ink);
+  --bs-btn-hover-border-color: var(--po-ink);
+  --bs-btn-active-bg: var(--po-ink);
+  --bs-btn-active-border-color: var(--po-ink);
+  --bs-btn-disabled-bg: var(--po-primary);
+  --bs-btn-disabled-border-color: var(--po-primary);
 }
+
+.btn-outline-primary {
+  --bs-btn-color: var(--po-primary);
+  --bs-btn-border-color: var(--po-primary);
+  --bs-btn-hover-bg: var(--po-primary);
+  --bs-btn-hover-border-color: var(--po-primary);
+  --bs-btn-active-bg: var(--po-ink);
+}
+
+/* Turuncu vurgu butonu: üstünde lacivert yazı (beyaz okunmaz) */
+.btn-accent {
+  background: var(--po-accent);
+  border-color: var(--po-accent);
+  color: var(--po-ink);
+  font-weight: 600;
+}
+.btn-accent:hover { background: #cc5e0c; border-color: #cc5e0c; color: var(--po-ink); }
+
+/* Klavyeyle gezinirken odak çerçevesi turuncu */
+a:focus-visible, button:focus-visible, .btn:focus-visible,
+.form-control:focus, .form-select:focus {
+  outline: 3px solid var(--po-accent);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* ===== Üst menü ===== */
+.po-navbar {
+  background: var(--po-ink);
+  border-bottom: 3px solid var(--po-accent);
+}
+.po-navbar .nav-link { color: rgba(255, 255, 255, .8); }
+.po-navbar .nav-link:hover,
+.po-navbar .nav-link.active { color: #fff; }
+.po-navbar .nav-link.active { box-shadow: inset 0 -3px 0 var(--po-accent); }
 
 .brand-mark {
   display: inline-flex;
@@ -27,36 +80,49 @@ body {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: var(--po-primary);
-  color: #fff;
+  background: var(--po-accent);
+  color: var(--po-ink);
   font-size: 13px;
+  font-weight: 700;
 }
-
-.card-po {
-  background: #fff;
-  border: 1px solid var(--po-border);
-  border-radius: 12px;
-  padding: 24px;
-}
-
-.site-footer {
-  border-top: 1px solid var(--po-border);
-  background: #ffffff;
-}
-
 .brand-mark-lg {
   width: 52px;
   height: 52px;
   border-radius: 12px;
   font-size: 18px;
-  font-weight: 700;
+}
+
+/* ===== Kartlar ve kutular ===== */
+.card-po {
+  background: var(--po-surface);
+  border: 1px solid var(--po-border);
+  border-radius: 12px;
+  padding: 24px;
 }
 
 .info-box {
   background: var(--po-bg);
   border-radius: 8px;
   padding: 12px 16px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--po-muted);
   line-height: 1.5;
+}
+
+/* ===== Durum rozetleri ===== */
+.badge-success { background: var(--po-success); color: #fff; }
+.badge-warning { background: var(--po-accent); color: var(--po-ink); }
+.badge-info    { background: #e4e9f3; color: var(--po-primary); }
+
+/* Başarı mesajları zeytin yeşili */
+.alert-success {
+  --bs-alert-bg: #e8ecdf;
+  --bs-alert-border-color: #c9d1b8;
+  --bs-alert-color: var(--po-success);
+}
+
+/* ===== Alt bilgi ===== */
+.site-footer {
+  border-top: 1px solid var(--po-border);
+  background: var(--po-surface);
 }
