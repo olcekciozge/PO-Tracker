@@ -1,0 +1,1 @@
+{% if request.user.is_superuser or request.user.role == "admin" %}Yönetici{% elif request.user.is_authenticated %}{{ request.user.get_role_display }}{% endif %}
