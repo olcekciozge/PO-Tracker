@@ -1,9 +1,9 @@
 {% if messages %}
-  <div class="mb-4" aria-live="polite">
+  <div class="po-messages" aria-live="polite">
     {% for message in messages %}
-      <div class="alert {% if message.tags == 'error' %}alert-danger{% elif message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %} alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Kapat"></button>
+      <div class="po-alert {% if message.tags == 'error' %}po-alert-danger{% elif message.tags %}po-alert-{{ message.tags }}{% endif %}" role="alert">
+        <span>{{ message }}</span>
+        <button type="button" class="po-alert-close" aria-label="Kapat" onclick="this.parentElement.remove()">×</button>
       </div>
     {% endfor %}
   </div>

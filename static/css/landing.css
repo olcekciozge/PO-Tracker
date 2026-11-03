@@ -99,7 +99,7 @@
   font-size: 22px;
   font-weight: 800;
   letter-spacing: -.02em;
-  color: var(--lp-cream);
+  color: var(--lp-orange);
 }
 .lp-brand:hover .lp-brand-dot { transform: scale(1.6); }
 

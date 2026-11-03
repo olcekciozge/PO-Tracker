@@ -1,0 +1,43 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+{# Giriş ve parola sayfalarının ortak cam kart düzeni #}
+
+{% block navbar %}{% endblock %}
+
+{% block page %}
+<main class="po-auth">
+
+  <div class="po-auth-watermark" aria-hidden="true">
+    {% for row in "12345678901234" %}
+      <div>PO TRACKER · OUTCOME · PO TRACKER · OUTCOME · PO TRACKER · OUTCOME · PO TRACKER · OUTCOME · PO TRACKER · OUTCOME · PO TRACKER · OUTCOME ·</div>
+    {% endfor %}
+  </div>
+  <div class="po-auth-vignette" aria-hidden="true"></div>
+
+  <div class="po-auth-wrap">
+    <div class="po-glass">
+
+      <div class="po-auth-head">
+        {% include "partials/logo.html" %}
+        {% block auth_steps %}{% endblock %}
+        {% block auth_icon %}{% endblock %}
+        <h1>{% block auth_title %}{% endblock %}</h1>
+        <p>{% block auth_lead %}{% endblock %}</p>
+      </div>
+
+      {% include "partials/messages.html" %}
+
+      {% block auth_body %}{% endblock %}
+    </div>
+
+    {% block auth_after %}
+      <a class="po-ulink po-auth-back" href="{% url 'dashboard:landing' %}">← Ana sayfaya dön</a>
+    {% endblock %}
+  </div>
+
+</main>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}
