@@ -1,0 +1,52 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Ana sayfa{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <p class="eyebrow">PO Tracker</p>
+  <h1>Hoş geldin, {{ request.user.display_name }}</h1>
+  <p class="muted">{{ request.user.get_role_display }}{% if request.user.department_code %} · {{ request.user.department_code }}{% endif %}</p>
+</section>
+<div class="notice">
+  <strong>Bu sayfa hesap yönetim panelidir.</strong>
+  Ders, not ve program çıktısı grafiklerini ekip arkadaşlarının dashboard uygulaması sağlayacak.
+</div>
+<section class="card-grid" aria-label="Hızlı işlemler">
+  <article class="panel">
+    <h2>Profilim</h2>
+    <p>Adınızı, soyadınızı ve e-posta adresinizi güncelleyin; şifrenizi güvenle değiştirin.</p>
+    <a class="button button-secondary" href="{% url 'accounts:profile' %}">Profili görüntüle</a>
+  </article>
+  {% if can_see_roster %}
+  <article class="panel">
+    <h2>Bölüm kullanıcıları</h2>
+    <p>{% if is_manager %}Tüm kullanıcıları filtreleyin ve yönetin.{% else %}Yalnızca kendi bölümünüzün öğrencilerini ve eğitmenlerini görün.{% endif %}</p>
+    <a class="button button-secondary" href="{% url 'accounts:user_list' %}">Kullanıcı listesi</a>
+  </article>
+  {% endif %}
+  {% if is_manager %}
+  <article class="panel">
+    <h2>Yeni hesap</h2>
+    <p>Öğrenci, eğitmen veya bölüm başkanı hesabı açın ve ilk rolünü belirleyin.</p>
+    <a class="button button-primary" href="{% url 'accounts:user_create' %}">Kullanıcı oluştur</a>
+  </article>
+  <article class="panel">
+    <h2>İşlem geçmişi</h2>
+    <p>Hesap oluşturma, rol düzenleme, aktifleştirme ve kimlik doğrulama geçmişi.</p>
+    <a class="button button-secondary" href="{% url 'accounts:audit_list' %}">Kayıtları incele</a>
+  </article>
+  {% endif %}
+</section>
+{% if can_see_roster %}
+<section class="panel section-gap">
+  <h2>Kullanıcı sayıları</h2>
+  <div class="stat-grid">
+    {% for item in role_stats %}
+      <div class="stat">
+        <span class="stat-number">{{ item.count }}</span>
+        <span class="stat-label">{{ item.label }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

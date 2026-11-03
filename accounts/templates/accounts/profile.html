@@ -1,0 +1,39 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Profilim{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <p class="eyebrow">Hesap ayarları</p>
+  <h1>Profilim</h1>
+  <p class="muted">Kullanıcı adınız ve rolünüz kurum yöneticisi tarafından atanır.</p>
+</div>
+<div class="two-columns">
+  <section class="panel">
+    <h2>İletişim bilgilerim</h2>
+    <form method="post" class="stack">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-field">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}<p class="help-text">{{ field.help_text }}</p>{% endif %}
+          {% if field.errors %}<div class="field-error">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endfor %}
+      {% if form.non_field_errors %}<div role="alert" class="form-errors">{{ form.non_field_errors }}</div>{% endif %}
+      <button type="submit" class="button button-primary">Bilgilerimi kaydet</button>
+    </form>
+  </section>
+  <aside class="panel">
+    <h2>Kurumsal bilgiler</h2>
+    <dl class="details">
+      <dt>Kullanıcı adı</dt><dd>{{ request.user.username }}</dd>
+      <dt>Rol</dt><dd>{{ request.user.get_role_display }}</dd>
+      <dt>Bölüm</dt><dd>{{ request.user.department_code|default:'Atanmadı' }}</dd>
+      <dt>Öğrenci numarası</dt><dd>{{ request.user.student_number|default:'—' }}</dd>
+      <dt>Son giriş</dt><dd>{{ request.user.last_login|date:'d.m.Y H:i'|default:'İlk giriş' }}</dd>
+    </dl>
+    <div class="divider"></div>
+    <a class="button button-secondary" href="{% url 'accounts:password_change' %}">Parolamı değiştir</a>
+  </aside>
+</div>
+{% endblock %}

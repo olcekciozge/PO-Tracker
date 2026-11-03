@@ -1,0 +1,67 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Kullanıcılar{% endblock %}
+{% block content %}
+<div class="heading-actions">
+  <div class="page-heading">
+    <p class="eyebrow">Kullanıcı dizini</p>
+    <h1>{% if can_manage %}Tüm kullanıcılar{% else %}Bölüm kullanıcıları{% endif %}</h1>
+    <p class="muted">{{ total_users }} eşleşen hesap</p>
+  </div>
+  {% if can_manage %}
+    <a class="button button-primary" href="{% url 'accounts:user_create' %}">+ Yeni hesap</a>
+  {% endif %}
+</div>
+<section class="panel">
+  <form method="get" class="filter-grid" aria-label="Kullanıcı filtresi">
+    {% for field in search_form %}
+      <div class="form-field">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}<div class="field-error">{{ field.errors }}</div>{% endif %}
+      </div>
+    {% endfor %}
+    <div class="filter-actions">
+      <button class="button button-primary" type="submit">Filtrele</button>
+      <a class="button button-secondary" href="{% url 'accounts:user_list' %}">Temizle</a>
+    </div>
+  </form>
+  <div class="list-actions">
+    <a href="{% url 'accounts:user_export' %}?{{ request.GET.urlencode }}">Filtrelenmiş listeyi CSV indir</a>
+  </div>
+  <div class="table-scroll">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Kullanıcı</th>
+          <th scope="col">Rol</th>
+          <th scope="col">Bölüm</th>
+          <th scope="col">Öğrenci no.</th>
+          <th scope="col">Durum</th>
+          <th scope="col">İşlem</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for account in page_obj %}
+          <tr>
+            <td>
+              <strong>{{ account.display_name }}</strong>
+              <span class="subtle">@{{ account.username }}</span>
+            </td>
+            <td>{{ account.get_role_display }}</td>
+            <td>{{ account.department_code|default:'—' }}</td>
+            <td>{{ account.student_number|default:'—' }}</td>
+            <td>
+              {% if account.is_active %}<span class="chip chip-success">Aktif</span>
+              {% else %}<span class="chip">Pasif</span>{% endif %}
+            </td>
+            <td><a href="{% url 'accounts:user_detail' account.pk %}">Görüntüle</a></td>
+          </tr>
+        {% empty %}
+          <tr><td class="empty" colspan="6">Arama ölçütlerine uyan kullanıcı bulunamadı.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% include 'accounts/pagination.html' %}
+</section>
+{% endblock %}

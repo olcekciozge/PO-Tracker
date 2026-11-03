@@ -1,0 +1,46 @@
+{% extends 'accounts/base.html' %}
+{% block title %}{{ target.username }}{% endblock %}
+{% block content %}
+<div class="heading-actions">
+  <div class="page-heading">
+    <p class="eyebrow"><a href="{% url 'accounts:user_list' %}">← Kullanıcılar</a></p>
+    <h1>{{ target.display_name }}</h1>
+    <p class="muted">@{{ target.username }} · {{ target.get_role_display }}</p>
+  </div>
+  {% if can_manage %}
+    <a class="button button-primary" href="{% url 'accounts:user_edit' target.pk %}">Hesabı düzenle</a>
+  {% endif %}
+</div>
+<div class="two-columns">
+  <section class="panel">
+    <h2>Hesap bilgileri</h2>
+    <dl class="details">
+      <dt>Kullanıcı adı</dt><dd>{{ target.username }}</dd>
+      <dt>Ad soyad</dt><dd>{{ target.display_name }}</dd>
+      <dt>E-posta</dt><dd>{{ target.email|default:'—' }}</dd>
+      <dt>Rol</dt><dd>{{ target.get_role_display }}</dd>
+      <dt>Bölüm</dt><dd>{{ target.department_code|default:'—' }}</dd>
+      <dt>Öğrenci numarası</dt><dd>{{ target.student_number|default:'—' }}</dd>
+      <dt>Durum</dt><dd>{% if target.is_active %}Aktif{% else %}Pasif{% endif %}</dd>
+      <dt>Oluşturulma</dt><dd>{{ target.date_joined|date:'d.m.Y H:i' }}</dd>
+    </dl>
+  </section>
+  {% if can_manage %}
+  <aside class="panel">
+    <h2>Erişimi yönet</h2>
+    <p>Hesabı silmek yerine pasife almak, not ve çıktı kayıtlarının ilişkilerini korur.</p>
+    <form method="post" action="{% url 'accounts:user_status' target.pk %}" class="stack">
+      {% csrf_token %}
+      {% if target.is_active %}
+        <input type="hidden" name="active" value="0">
+        <button type="submit" class="button button-danger">Hesabı pasifleştir</button>
+      {% else %}
+        <input type="hidden" name="active" value="1">
+        <button type="submit" class="button button-primary">Hesabı aktifleştir</button>
+      {% endif %}
+    </form>
+    <p class="help-text">Kullanıcının parolasını Django yönetim panelinde sıfırlayabilirsiniz.</p>
+  </aside>
+  {% endif %}
+</div>
+{% endblock %}

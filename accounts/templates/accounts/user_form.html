@@ -1,0 +1,34 @@
+{% extends 'accounts/base.html' %}
+{% block title %}{{ heading }}{% endblock %}
+{% block content %}
+<div class="page-heading">
+  <p class="eyebrow"><a href="{% url 'accounts:user_list' %}">← Kullanıcılar</a></p>
+  <h1>{{ heading }}</h1>
+  <p class="muted">Roller ders ve çıktı uygulamalarındaki erişim kurallarının temelidir.</p>
+</div>
+<section class="panel form-panel">
+  <form method="post" class="stack">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="fields-grid">
+      {% for field in form %}
+        <div class="form-field {% if field.name == 'password1' or field.name == 'password2' %}full-width{% endif %}">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}<div class="help-text">{{ field.help_text|safe }}</div>{% endif %}
+          {% for error in field.errors %}<p class="field-error">{{ error }}</p>{% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="button button-primary">{{ submit_label }}</button>
+      <a href="{% if target %}{% url 'accounts:user_detail' target.pk %}{% else %}{% url 'accounts:user_list' %}{% endif %}" class="button button-secondary">İptal</a>
+    </div>
+  </form>
+</section>
+{% if is_creation %}
+  <p class="help-text panel-note">Yeni kullanıcı parolasını güçlü ve özel bir kanaldan paylaşın. Parolaları CSV dosyalarına eklemeyin.</p>
+{% endif %}
+{% endblock %}

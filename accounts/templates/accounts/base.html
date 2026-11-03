@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>{% block title %}PO Tracker{% endblock %} | Accounts</title>
+  <link rel="stylesheet" href="{% static 'accounts/css/accounts.css' %}">
+</head>
+<body>
+  <a class="skip-link" href="#content">İçeriğe geç</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="{% url 'accounts:home' %}" aria-label="PO Tracker ana sayfa">
+        <span class="brand-mark" aria-hidden="true">PO</span>
+        <span>PO Tracker <small>Hesap &amp; Yetkiler</small></span>
+      </a>
+      {% if request.user.is_authenticated %}
+        <nav class="nav" aria-label="Hesap menüsü">
+          <a href="{% url 'accounts:home' %}">Ana sayfa</a>
+          <a href="{% url 'accounts:profile' %}">Profilim</a>
+          {% if request.user.is_superuser or request.user.role == 'admin' and request.user.is_staff or request.user.role == 'head' and request.user.department_code %}
+            <a href="{% url 'accounts:user_list' %}">Kullanıcılar</a>
+          {% endif %}
+          {% if request.user.is_superuser or request.user.role == 'admin' and request.user.is_staff %}
+            <a href="{% url 'accounts:audit_list' %}">İşlem kayıtları</a>
+          {% endif %}
+          <form class="logout-form" action="{% url 'accounts:logout' %}" method="post">
+            {% csrf_token %}
+            <button class="nav-logout" type="submit">Güvenli çıkış</button>
+          </form>
+        </nav>
+      {% else %}
+        <nav class="nav" aria-label="Giriş menüsü">
+          <a href="{% url 'accounts:login' %}">Giriş yap</a>
+        </nav>
+      {% endif %}
+    </div>
+  </header>
+
+  <main id="content" class="page-container">
+    {% if messages %}
+      <div class="message-stack" aria-live="polite">
+        {% for message in messages %}
+          <div class="message {% if message.tags %}message-{{ message.tags }}{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <span>PO Tracker — Program Çıktısı İzleme Sistemi</span>
+    <span>Yetkileriniz yalnızca tanımlandığınız bölüm ve görevle sınırlıdır.</span>
+  </footer>
+</body>
+</html>

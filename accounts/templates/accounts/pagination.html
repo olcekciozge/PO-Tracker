@@ -1,0 +1,11 @@
+{% if page_obj.has_other_pages %}
+  <nav class="pagination" aria-label="Sayfalama">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&amp;q={{ request.GET.q|urlencode }}{% endif %}{% if request.GET.role %}&amp;role={{ request.GET.role|urlencode }}{% endif %}{% if request.GET.status %}&amp;status={{ request.GET.status|urlencode }}{% endif %}{% if request.GET.action %}&amp;action={{ request.GET.action|urlencode }}{% endif %}">Önceki</a>
+    {% endif %}
+    <span>Sayfa {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}{% if request.GET.q %}&amp;q={{ request.GET.q|urlencode }}{% endif %}{% if request.GET.role %}&amp;role={{ request.GET.role|urlencode }}{% endif %}{% if request.GET.status %}&amp;status={{ request.GET.status|urlencode }}{% endif %}{% if request.GET.action %}&amp;action={{ request.GET.action|urlencode }}{% endif %}">Sonraki</a>
+    {% endif %}
+  </nav>
+{% endif %}

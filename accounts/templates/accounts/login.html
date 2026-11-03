@@ -1,0 +1,32 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Giriş{% endblock %}
+{% block content %}
+<section class="auth-layout">
+  <div class="panel auth-panel">
+    <p class="eyebrow">Hesap erişimi</p>
+    <h1>PO Tracker'a giriş yap</h1>
+    <p class="muted">Üniversite hesabınızın kullanıcı adı ve parolasını kullanın.</p>
+    {% if form.non_field_errors %}
+      <div class="form-errors" role="alert">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <form method="post" class="stack" action="{% url 'accounts:login' %}">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-field">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.errors %}<div class="field-error">{{ field.errors }}</div>{% endif %}
+        </div>
+      {% endfor %}
+      {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+      <button type="submit" class="button button-primary">Giriş yap</button>
+    </form>
+    <p class="foot-note"><a href="{% url 'accounts:password_reset' %}">Parolamı unuttum</a></p>
+  </div>
+  <aside class="auth-aside">
+    <h2>Tek oturum, rolünüze uygun ekran</h2>
+    <p>Öğrenciler kendi çıktılarını; eğitmenler ders verilerini; bölüm başkanları bölüm raporlarını görebilir.</p>
+    <p class="muted">Sistemde herkese açık üyelik oluşturma özelliği yoktur. Hesaplar yetkili yönetici tarafından açılır.</p>
+  </aside>
+</section>
+{% endblock %}
