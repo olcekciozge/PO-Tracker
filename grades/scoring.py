@@ -12,3 +12,12 @@ def lo_score(contributions, grades):
         if assessment in grades:
             pairs.append((weight, grades[assessment]))
     return weighted_average(pairs)
+
+
+def po_score(lo_links, lo_scores):
+    pairs = []
+    for lo, weight in lo_links.items():
+        score = lo_scores.get(lo)
+        if score is not None:
+            pairs.append((weight, score))
+    return weighted_average(pairs)
