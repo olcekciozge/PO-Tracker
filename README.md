@@ -11,8 +11,8 @@ Grades on assessments roll up into Learning Outcome (LO) scores, which roll up i
 | Member | Role | Owns |
 |---|---|---|
 | _Rümeysa_ | Data model | `outcomes`, `courses`, `grades` apps, score calculation |
-| _Name B_ | Architecture & infrastructure | Project setup, PostgreSQL, settings, CI (GitHub Actions) |
-| _Name C_ | Scrum Master & access control | Backlog, sprints, velocity, `accounts` app (roles, login) |
+| _Batuhan_ | Architecture & infrastructure | Project setup, PostgreSQL, settings, CI (GitHub Actions) |
+| _Buğra_ | Scrum Master & access control | Backlog, sprints, velocity, `accounts` app (roles, login) |
 | _Özge_ | UI/UX | Wireframes, templates, `dashboard` app, charts |
 
 Stack: Python + Django, PostgreSQL.
@@ -71,7 +71,7 @@ Example (Elif): Midterm 90, Project 80
 
 | App        | Owner | Contents |
 |------------|---|---|
-| `accounts` | C | User, roles, login, permissions |
+| `accounts` | Buğra | User, roles, login, permissions |
 | `outcomes`   | Rümeysa | ProgramOutcome, LearningOutcome, LOPO, AssessmentLO |
 | `courses`    | Rümeysa | Course, Assessment, Enrollment |
 | `grades`   | Rümeysa | Grade, score calculation |
