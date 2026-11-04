@@ -1,0 +1,86 @@
+{% extends "accounts/base.html" %}
+{% block title %}Ana sayfa{% endblock %}
+
+{% block eyebrow %}{% include "partials/role_label.html" %}{% if request.user.department_code %} · {{ request.user.department_code }}{% endif %}{% endblock %}
+{% block heading %}Hoş geldin, {{ request.user.first_name|default:request.user.display_name }}{% endblock %}
+{% block lead %}Sayfalarınıza ve hesap ayarlarınıza buradan ulaşabilirsiniz.{% endblock %}
+
+{% block content %}
+<div class="po-tiles po-stagger">
+
+  {% if request.user.is_student %}
+    <a class="po-tile po-tile-accent" href="{% url 'dashboard:student_profile' %}">
+      <span class="po-tile-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-7"></path><path d="M22 20H2"></path></svg>
+      </span>
+      <h2>PO Profilim</h2>
+      <p>Program çıktısı skorlarınızı ve her skorun hangi dersten geldiğini görün.</p>
+            <span class="po-tile-go">Profili aç <span aria-hidden="true">→</span></span>
+    </a>
+  {% elif request.user.is_instructor %}
+    <a class="po-tile po-tile-accent" href="{% url 'dashboard:instructor_courses' %}">
+      <span class="po-tile-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z"></path><path d="M4 21V5"></path><path d="M9 8h6"></path></svg>
+      </span>
+      <h2>Derslerim</h2>
+      <p>Derslerinizin kurulum durumunu ve girilen notları görün.</p>
+      <span class="po-tile-go">Dersleri aç <span aria-hidden="true">→</span></span>
+    </a>
+  {% endif %}
+
+  <a class="po-tile" href="{% url 'accounts:profile' %}">
+    <span class="po-tile-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 4-7 8-7s8 3 8 7"></path></svg>
+    </span>
+    <h2>Profilim</h2>
+    <p>Ad, soyad ve e-posta bilgilerinizi güncelleyin, parolanızı değiştirin.</p>
+    <span class="po-tile-go">Ayarlar <span aria-hidden="true">→</span></span>
+  </a>
+
+  {% if can_see_roster %}
+    <a class="po-tile" href="{% url 'accounts:user_list' %}">
+      <span class="po-tile-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"></path><path d="M16 4.5a3.5 3.5 0 0 1 0 7"></path><path d="M18 14.3c2 .8 3.5 2.9 3.5 5.7"></path></svg>
+      </span>
+      <h2>Kullanıcılar</h2>
+      <p>{% if is_manager %}Tüm kullanıcıları filtreleyin ve yönetin.{% else %}Kendi bölümünüzün öğrencilerini ve eğitmenlerini görün.{% endif %}</p>
+      <span class="po-tile-go">Listeyi aç <span aria-hidden="true">→</span></span>
+    </a>
+  {% endif %}
+
+  {% if is_manager %}
+    <a class="po-tile" href="{% url 'accounts:user_create' %}">
+      <span class="po-tile-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="8" r="4"></circle><path d="M2 21c0-4 3.6-7 8-7"></path><path d="M19 14v6"></path><path d="M16 17h6"></path></svg>
+      </span>
+      <h2>Yeni hesap</h2>
+      <p>Öğrenci, öğretim elemanı veya bölüm başkanı hesabı açın.</p>
+      <span class="po-tile-go">Hesap oluştur <span aria-hidden="true">→</span></span>
+    </a>
+
+    <a class="po-tile" href="{% url 'accounts:audit_list' %}">
+      <span class="po-tile-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+      </span>
+      <h2>İşlem geçmişi</h2>
+      <p>Hesap açma, rol değişikliği ve giriş kayıtları.</p>
+      <span class="po-tile-go">Kayıtları incele <span aria-hidden="true">→</span></span>
+    </a>
+  {% endif %}
+
+</div>
+
+{% if can_see_roster %}
+  <section class="po-card po-fade" style="--delay: .8s">
+    <h2>Kullanıcı sayıları</h2>
+    <div class="po-stats">
+      {% for item in role_stats %}
+        <div class="po-stat">
+          <span>{{ item.label }}</span>
+          <strong>{{ item.count }}</strong>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+{% endif %}
+{% endblock %}

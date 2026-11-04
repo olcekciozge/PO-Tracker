@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Derslerim{% endblock %}
+
+{% block eyebrow %}Öğretim Elemanı{% endblock %}
+{% block heading %}Derslerim{% endblock %}
+{% block lead %}Yönetici tarafından size atanan dersler. Not girmeden önce her dersin kurulumunu tamamlayın.{% endblock %}
+
+{% block content %}
+{% if not cards %}
+
+  <section class="po-card po-fade">
+    <h2>Size atanmış bir ders yok</h2>
+    <p class="po-card-sub">Yönetici bir dersi size atadığında burada görünecek.</p>
+  </section>
+
+{% else %}
+
+  <div class="po-stats">
+    <div class="po-stat po-stat-blue po-pop" style="--delay: .5s">
+      <span>Ders</span>
+      <strong>{{ cards|length }}</strong>
+    </div>
+    <div class="po-stat po-pop" style="--delay: .6s">
+      <span>Toplam öğrenci</span>
+      <strong>{{ student_total }}</strong>
+    </div>
+    <div class="po-stat po-stat-olive po-pop" style="--delay: .7s">
+      <span>Kurulumu eksik</span>
+      <strong>{{ incomplete_count }}</strong>
+    </div>
+  </div>
+
+  <div class="po-grid po-stagger">
+    {% for card in cards %}
+      <article class="po-card po-course-card">
+
+        <div class="po-cc-head">
+          <div>
+            <h2 class="po-cc-code">{{ card.course.code }}</h2>
+            <span class="po-card-sub">{{ card.course.title }} · {{ card.course.term }}</span>
+          </div>
+          {% if card.setup_ok %}
+            <span class="po-badge po-badge-ok">Kurulum tamam</span>
+          {% else %}
+            <span class="po-badge po-badge-warn">Kurulum eksik</span>
+          {% endif %}
+        </div>
+
+        <div class="po-cc-stats">
+          <div><span>Öğrenci</span><strong>{{ card.course.student_count }}</strong></div>
+          <div><span>Değerlendirme</span><strong>{{ card.course.assessment_count }}</strong></div>
+          <div><span>LO</span><strong>{{ card.course.lo_count }}</strong></div>
+        </div>
+
+        <div>
+          <div class="po-cc-progress-top">
+            <span>Girilen notlar</span>
+            <span>{{ card.graded }} / {{ card.expected }}</span>
+          </div>
+          <progress class="po-meter" value="{{ card.graded }}" max="{{ card.expected|default:1 }}"
+                    aria-label="{{ card.course.code }} girilen notlar">{{ card.graded }} / {{ card.expected }}</progress>
+        </div>
+
+        <ul class="po-checklist" aria-label="Kurulum adımları">
+          {% for check in card.checks %}
+            <li class="{% if check.ok %}is-ok{% endif %}">
+              {{ check.label }}<span class="visually-hidden">{% if check.ok %}: tamam{% else %}: eksik{% endif %}</span>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="po-cc-actions">
+          <span class="po-btn po-btn-white is-disabled" aria-disabled="true">Ders kurulumu · yakında</span>
+          <span class="po-btn po-btn-navy is-disabled" aria-disabled="true">Not girişi · yakında</span>
+        </div>
+
+      </article>
+    {% endfor %}
+  </div>
+
+{% endif %}
+{% endblock %}

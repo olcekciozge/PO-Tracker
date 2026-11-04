@@ -1,0 +1,56 @@
+{% extends "public/base_public.html" %}
+{% block title %}Hakkında{% endblock %}
+
+{% block eyebrow %}Hakkında{% endblock %}
+{% block heading %}PO Tracker nedir?{% endblock %}
+{% block lead %}Öğrencilerin program çıktısı (PO) skorlarını dersler boyunca takip eden web tabanlı bir sistem.{% endblock %}
+
+{% block public_content %}
+
+<div class="po-grid">
+  <section class="po-card po-fade" style="--delay: .4s">
+    <h2>Proje</h2>
+    <p class="po-about-text">PO Tracker, Acıbadem Üniversitesi Bilgisayar Mühendisliği Bölümü'nde <strong>CSE 311 Yazılım Mühendisliği</strong> ve <strong>CSE 321 Veri Sistemleri</strong> derslerinin ortak dönem projesi olarak geliştirilmektedir.</p>
+    <p class="po-about-text">Amaç, akreditasyon süreçlerinde elle tutulan program çıktısı hesaplarını otomatikleştirmek ve her öğrencinin gelişimini tek bir profilde görünür kılmaktır.</p>
+  </section>
+
+  <section class="po-card po-fade" style="--delay: .5s">
+    <h2>Nasıl geliştiriyoruz?</h2>
+    <ul class="po-role-list">
+      <li>Scrum ile haftalık sprintler, GitHub Projects üzerinde backlog</li>
+      <li>Her üye kendi dalında çalışır, değişiklikler pull request ile birleşir</li>
+      <li>Her değişiklikte testler GitHub Actions ile otomatik çalışır</li>
+    </ul>
+    <div class="po-chips" aria-label="Kullanılan teknolojiler">
+      <span>Python</span><span>Django</span><span>PostgreSQL</span><span>GitHub Actions</span><span>Bootstrap</span>
+    </div>
+  </section>
+</div>
+
+<section class="po-card po-fade" style="--delay: .6s">
+  <h2>Ekip</h2>
+  <div class="po-team po-stagger">
+    <div class="po-member">
+      <span class="po-avatar po-avatar-lg" aria-hidden="true">R</span>
+      <strong>Rümeysa</strong>
+      <span>Veri modeli ve skor hesaplama</span>
+    </div>
+    <div class="po-member">
+      <span class="po-avatar po-avatar-lg" aria-hidden="true">B</span>
+      <strong>Batuhan</strong>
+      <span>Mimari ve altyapı</span>
+    </div>
+    <div class="po-member">
+      <span class="po-avatar po-avatar-lg" aria-hidden="true">B</span>
+      <strong>Buğra</strong>
+      <span>Scrum Master, hesaplar ve yetkiler</span>
+    </div>
+    <div class="po-member">
+      <span class="po-avatar po-avatar-lg" aria-hidden="true">Ö</span>
+      <strong>Özge</strong>
+      <span>Arayüz ve kullanıcı deneyimi</span>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
