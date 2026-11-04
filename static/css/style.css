@@ -946,3 +946,130 @@ a.po-cta { display: flex; align-items: center; justify-content: center; text-dec
 .po-cc-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 4px; }
 .po-btn.is-disabled { opacity: .5; cursor: not-allowed; }
 .po-btn.is-disabled:hover { transform: none; box-shadow: none; }
+
+/* =========================================================
+   Tanıtım sayfaları: Nasıl çalışır, Roller, Program çıktıları, Hakkında
+   ========================================================= */
+
+/* --- Not → LO → PO akışı --- */
+.po-flow { display: flex; flex-wrap: wrap; align-items: stretch; gap: 12px; }
+.po-flow-node {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: var(--po-tint);
+}
+.po-flow-node strong { font-size: 16px; font-weight: 800; }
+.po-flow-node > span:last-child { font-size: 13px; color: var(--po-muted); }
+.po-flow-tag { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--po-orange); }
+.po-flow-node-accent { background: var(--po-navy); color: #fff; }
+.po-flow-node-accent > span:last-child { color: rgba(255, 255, 255, .75); }
+.po-flow-arrow { align-self: center; font-size: 24px; font-weight: 800; color: var(--po-orange); }
+@media (max-width: 700px) { .po-flow-arrow { transform: rotate(90deg); width: 100%; text-align: center; } }
+
+/* --- Adım kartları --- */
+.po-how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+.po-how-card h2 { font-size: 17px; }
+.po-how-card p { margin: 0; font-size: 14px; line-height: 1.6; color: var(--po-muted); }
+.po-how-num {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--po-orange);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Anton, Impact, sans-serif;
+  font-size: 20px;
+}
+.po-formula-big { justify-content: center; padding: 22px; font-size: 18px; font-weight: 700; text-align: center; }
+
+/* --- Rol kartları --- */
+.po-roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+.po-role-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--po-tint);
+  color: var(--po-navy-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.po-role-icon svg { width: 24px; height: 24px; }
+.po-role-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+.po-role-list li { position: relative; padding-left: 20px; line-height: 1.5; }
+.po-role-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: .55em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--po-orange);
+}
+.po-role-accent { background: var(--po-navy); border-color: var(--po-navy); color: #fff; }
+.po-role-accent .po-card-sub { color: rgba(255, 255, 255, .7); }
+.po-role-accent .po-role-icon { background: var(--po-orange); color: #fff; }
+
+/* --- Program çıktısı kartları --- */
+.po-outcomes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.po-outcome-card { gap: 10px; }
+.po-outcome-code {
+  padding-top: .1em;
+  font-family: Anton, Impact, sans-serif;
+  font-size: 36px;
+  line-height: 1.1;
+  color: var(--po-orange);
+}
+.po-outcome-card p { margin: 0; font-size: 15px; font-weight: 600; line-height: 1.5; }
+.po-outcome-meta { margin-top: auto; font-size: 12px; font-weight: 700; color: var(--po-muted); }
+
+/* --- Hakkında --- */
+.po-about-text { margin: 0; font-size: 15px; line-height: 1.7; color: var(--po-muted); }
+.po-about-text strong { color: var(--po-navy); }
+.po-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.po-chips span { padding: 6px 12px; border-radius: 999px; background: var(--po-tint); font-size: 12px; font-weight: 700; color: var(--po-navy-2); }
+.po-team { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+.po-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 14px;
+  border-radius: 18px;
+  background: var(--po-tint);
+  text-align: center;
+}
+.po-member .po-avatar { margin-bottom: 4px; }
+.po-member strong { font-size: 16px; }
+.po-member span:last-child { font-size: 13px; color: var(--po-muted); }
+
+/* --- Sayfa sonu: giriş çağrısı ve alt bilgi --- */
+.po-cta-band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 32px;
+  border-radius: 24px;
+  background: var(--po-navy);
+  color: #fff;
+}
+.po-cta-band h2 { margin: 0 0 6px; font-size: 22px; font-weight: 800; }
+.po-cta-band p { margin: 0; color: rgba(255, 255, 255, .75); }
+.po-public-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  font-size: 13px;
+  color: var(--po-muted);
+}

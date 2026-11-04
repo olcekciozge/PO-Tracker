@@ -1,0 +1,85 @@
+{% extends "public/base_public.html" %}
+{% block title %}Nasıl çalışır{% endblock %}
+
+{% block eyebrow %}Nasıl çalışır{% endblock %}
+{% block heading %}Notlardan program çıktılarına{% endblock %}
+{% block lead %}Öğretim elemanının girdiği her not, önce dersin öğrenme çıktılarına (LO), oradan da bölümün program çıktılarına (PO) otomatik olarak yansır.{% endblock %}
+
+{% block public_content %}
+
+  {# Üç katman akışı #}
+  <section class="po-card po-fade" style="--delay: .4s">
+    <div class="po-flow" aria-label="Not, LO ve PO akışı">
+      <div class="po-flow-node">
+        <span class="po-flow-tag">Katman 1</span>
+        <strong>Değerlendirme notları</strong>
+        <span>Ara sınav, proje, ödev…</span>
+      </div>
+      <span class="po-flow-arrow" aria-hidden="true">→</span>
+      <div class="po-flow-node">
+        <span class="po-flow-tag">Katman 2</span>
+        <strong>Öğrenme çıktıları (LO)</strong>
+        <span>Dersin hedefleri</span>
+      </div>
+      <span class="po-flow-arrow" aria-hidden="true">→</span>
+      <div class="po-flow-node po-flow-node-accent">
+        <span class="po-flow-tag">Katman 3</span>
+        <strong>Program çıktıları (PO)</strong>
+        <span>Bölümün 11 hedefi</span>
+      </div>
+    </div>
+  </section>
+
+  {# Adımlar #}
+  <div class="po-how-grid po-stagger">
+    <article class="po-card po-how-card">
+      <span class="po-how-num">1</span>
+      <h2>Ders kurulur</h2>
+      <p>Öğretim elemanı dersin değerlendirmelerini ve ağırlıklarını (örneğin Ara Sınav %25, Proje %40) ve öğrenme çıktılarını tanımlar.</p>
+    </article>
+    <article class="po-card po-how-card">
+      <span class="po-how-num">2</span>
+      <h2>Bağlantılar kurulur</h2>
+      <p>Her değerlendirmenin hangi LO'yu ne kadar beslediği yüzde olarak, her LO'nun hangi PO'ya katkı verdiği 1–5 arası ağırlıkla belirlenir.</p>
+    </article>
+    <article class="po-card po-how-card">
+      <span class="po-how-num">3</span>
+      <h2>Notlar girilir</h2>
+      <p>Her değerlendirmeden sonra notlar tek tek ya da toplu olarak (CSV) sisteme girilir.</p>
+    </article>
+    <article class="po-card po-how-card">
+      <span class="po-how-num">4</span>
+      <h2>Profil oluşur</h2>
+      <p>LO ve PO skorları otomatik hesaplanır. Öğrenci kendi profilini, bölüm başkanı tüm bölümün tablosunu görür.</p>
+    </article>
+  </div>
+
+  {# Formül ve örnek #}
+  <div class="po-grid">
+    <section class="po-card po-fade" style="--delay: .6s">
+      <h2>Tek kural: ağırlıklı ortalama</h2>
+      <p class="po-card-sub">Her katmanda aynı hesap yapılır.</p>
+      <div class="po-formula po-formula-big">
+        <span>skor = Σ (ağırlık × skor) ÷ Σ ağırlık</span>
+      </div>
+      <p class="po-card-sub">Henüz notu girilmemiş değerlendirmeler hesaba katılmaz; böylece dönem içinde de anlamlı bir skor görülür.</p>
+    </section>
+
+    <section class="po-card po-fade" style="--delay: .7s">
+      <h2>Örnek: Elif'in profili</h2>
+      <p class="po-card-sub">Ara sınav: 90 · Proje: 80</p>
+      <div class="po-table-wrap">
+        <table class="po-table">
+          <thead><tr><th>Skor</th><th>Hesap</th><th class="text-end">Sonuç</th></tr></thead>
+          <tbody>
+            <tr><td><strong>LO1</strong></td><td>(90×0,6 + 80×0,4) ÷ 1,0</td><td class="text-end">86,0</td></tr>
+            <tr><td><strong>LO2</strong></td><td>(90×0,4 + 80×1,0) ÷ 1,4</td><td class="text-end">82,9</td></tr>
+            <tr><td><strong>PO1</strong></td><td>(86,0×2 + 82,9×1) ÷ 3</td><td class="text-end"><strong>85,0</strong></td></tr>
+            <tr><td><strong>PO2</strong></td><td>82,9×2 ÷ 2</td><td class="text-end"><strong>82,9</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+{% endblock %}

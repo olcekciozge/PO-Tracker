@@ -1,0 +1,32 @@
+{% with url_name=request.resolver_match.url_name %}
+<div class="po-navbar">
+  <nav class="po-nav" aria-label="Site menüsü">
+
+    <div class="po-nav-brand">
+      {% include "partials/logo.html" %}
+      <span class="po-nav-mini" data-po-mini aria-hidden="true"></span>
+    </div>
+
+    <button class="po-nav-toggle" type="button" aria-controls="poNavMenu" aria-expanded="false" aria-label="Menüyü aç" data-po-nav-toggle>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+    </button>
+
+    <div class="po-nav-menu" id="poNavMenu">
+      <div class="po-nav-links">
+        <a class="po-nav-link" href="{% url 'dashboard:how_it_works' %}" aria-current="{% if url_name == 'how_it_works' %}page{% else %}false{% endif %}">Nasıl çalışır</a>
+        <a class="po-nav-link" href="{% url 'dashboard:roles' %}" aria-current="{% if url_name == 'roles' %}page{% else %}false{% endif %}">Roller</a>
+        <a class="po-nav-link" href="{% url 'dashboard:program_outcomes' %}" aria-current="{% if url_name == 'program_outcomes' %}page{% else %}false{% endif %}">Program çıktıları</a>
+        <a class="po-nav-link" href="{% url 'dashboard:about' %}" aria-current="{% if url_name == 'about' %}page{% else %}false{% endif %}">Hakkında</a>
+      </div>
+      <div class="po-nav-user">
+        {% if request.user.is_authenticated %}
+          <a class="po-btn po-btn-orange po-btn-sm" href="{% url 'dashboard:landing' %}">Panelime git →</a>
+        {% else %}
+          <a class="po-btn po-btn-orange po-btn-sm" href="{% url 'accounts:login' %}">Giriş yap</a>
+        {% endif %}
+      </div>
+    </div>
+
+  </nav>
+</div>
+{% endwith %}

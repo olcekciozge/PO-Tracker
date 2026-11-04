@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{# Tanıtım sayfalarının ortak düzeni: site menüsü + sayfa sonunda giriş çağrısı #}
+
+{% block navbar %}
+  {% include "partials/public_nav.html" %}
+{% endblock %}
+
+{% block content %}
+  {% block public_content %}{% endblock %}
+
+  <section class="po-cta-band po-fade" style="--delay: .9s">
+    <div>
+      <h2>Program çıktılarınızı tek bakışta görün</h2>
+      <p>Hesabınızla giriş yapın; rolünüze uygun sayfaya yönlendirilin.</p>
+    </div>
+    {% if request.user.is_authenticated %}
+      <a class="po-btn po-btn-orange" href="{% url 'dashboard:landing' %}">Panelime git →</a>
+    {% else %}
+      <a class="po-btn po-btn-orange" href="{% url 'accounts:login' %}">Giriş yap →</a>
+    {% endif %}
+  </section>
+
+  <footer class="po-public-footer">
+    <span>PO Tracker — Program Çıktısı İzleme Sistemi</span>
+    <span>Acıbadem Üniversitesi · Bilgisayar Mühendisliği</span>
+  </footer>
+{% endblock %}

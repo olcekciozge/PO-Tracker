@@ -26,10 +26,10 @@
         <span class="lp-brand-po">PO</span><span class="lp-brand-dot" aria-hidden="true"></span><span class="lp-brand-name">Tracker</span>
       </a>
       <div class="lp-links">
-        <a href="#">NASIL ÇALIŞIR</a>
-        <a href="#">ROLLER</a>
-        <a href="#">PROGRAM ÇIKTILARI</a>
-        <a href="#">HAKKINDA</a>
+        <a href="{% url 'dashboard:how_it_works' %}">NASIL ÇALIŞIR</a>
+        <a href="{% url 'dashboard:roles' %}">ROLLER</a>
+        <a href="{% url 'dashboard:program_outcomes' %}">PROGRAM ÇIKTILARI</a>
+        <a href="{% url 'dashboard:about' %}">HAKKINDA</a>
       </div>
       <a class="lp-btn lp-btn-orange lp-btn-sm" href="{% url 'accounts:login' %}">GİRİŞ YAP</a>
     </nav>
@@ -110,10 +110,6 @@
       Değerlendirme notlarını öğrenme çıktılarına, öğrenme çıktılarını program çıktılarına otomatik dönüştürün. Her öğrenci için tek bir profil.
     </p>
 
-    <div class="lp-actions lp-fade" style="--delay: 1s">
-      <a class="lp-btn lp-btn-ghost" href="#">Nasıl çalışır?</a>
-      <a class="lp-btn lp-btn-orange" href="{% url 'accounts:login' %}">Giriş yap <span aria-hidden="true">→</span></a>
-    </div>
 
     <div class="lp-stats lp-fade" style="--delay: 1.1s">
       <div><strong>11</strong><span>Program çıktısı</span></div>

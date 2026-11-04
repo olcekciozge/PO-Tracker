@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.db.models import Count
 from django.shortcuts import redirect, render
+
+from outcomes.models import ProgramOutcome
 
 from .selectors import instructor_courses, student_po_profile
 
@@ -16,6 +19,31 @@ def landing(request):
     return render(request, "dashboard/landing.html")
 
 
+# ---------------------------------------------------------------
+# Herkese açık tanıtım sayfaları
+# ---------------------------------------------------------------
+def how_it_works(request):
+    return render(request, "public/how_it_works.html")
+
+
+def roles(request):
+    return render(request, "public/roles.html")
+
+
+def program_outcomes(request):
+    outcomes = ProgramOutcome.objects.annotate(
+        course_count=Count("lo_links__lo__course", distinct=True)
+    )
+    return render(request, "public/program_outcomes.html", {"outcomes": outcomes})
+
+
+def about(request):
+    return render(request, "public/about.html")
+
+
+# ---------------------------------------------------------------
+# Öğrenci
+# ---------------------------------------------------------------
 @login_required
 def student_profile(request):
     if not request.user.is_student:
@@ -53,6 +81,9 @@ def student_profile(request):
     })
 
 
+# ---------------------------------------------------------------
+# Öğretim elemanı
+# ---------------------------------------------------------------
 @login_required
 def instructor_course_list(request):
     if not request.user.is_instructor:

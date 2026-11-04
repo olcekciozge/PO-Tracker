@@ -1,0 +1,68 @@
+{% extends "public/base_public.html" %}
+{% block title %}Roller{% endblock %}
+
+{% block eyebrow %}Roller{% endblock %}
+{% block heading %}Herkes kendi işini görür{% endblock %}
+{% block lead %}PO Tracker'da dört rol vardır. Her kullanıcı yalnızca kendi rolünün gerektirdiği bilgileri görür ve düzenler.{% endblock %}
+
+{% block public_content %}
+<div class="po-roles po-stagger">
+
+  <article class="po-card po-role-card po-role-accent">
+    <span class="po-role-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path></svg>
+    </span>
+    <h2>Öğrenci</h2>
+    <p class="po-card-sub">Kendi gelişimini takip eder.</p>
+    <ul class="po-role-list">
+      <li>Kendi notlarını ve LO skorlarını görür</li>
+      <li>11 program çıktısındaki profilini grafikte izler</li>
+      <li>Her skorun hangi dersten geldiğini inceler</li>
+      <li>Profilini PDF olarak kaydeder</li>
+    </ul>
+  </article>
+
+  <article class="po-card po-role-card">
+    <span class="po-role-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z"></path><path d="M4 21V5"></path><path d="M9 8h6"></path></svg>
+    </span>
+    <h2>Öğretim Elemanı</h2>
+    <p class="po-card-sub">Kendi derslerini yönetir.</p>
+    <ul class="po-role-list">
+      <li>Değerlendirmeleri ve ağırlıklarını tanımlar</li>
+      <li>Dersin öğrenme çıktılarını (LO) girer</li>
+      <li>Değerlendirme → LO ve LO → PO bağlantılarını kurar</li>
+      <li>Notları tek tek veya CSV ile toplu girer</li>
+    </ul>
+  </article>
+
+  <article class="po-card po-role-card">
+    <span class="po-role-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"></path><path d="M10 20V4"></path><path d="M16 20v-7"></path><path d="M22 20H2"></path></svg>
+    </span>
+    <h2>Bölüm Başkanı</h2>
+    <p class="po-card-sub">Bölümün genel tablosunu izler.</p>
+    <ul class="po-role-list">
+      <li>Bölümün 11 program çıktısını tanımlar ve günceller</li>
+      <li>Tüm öğrencilerin PO ortalamalarını görür</li>
+      <li>Derslerin kurulum durumunu takip eder</li>
+      <li>Bölüm raporu alır</li>
+    </ul>
+  </article>
+
+  <article class="po-card po-role-card">
+    <span class="po-role-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"></path></svg>
+    </span>
+    <h2>Yönetici</h2>
+    <p class="po-card-sub">Sistemi kurar ve yönetir.</p>
+    <ul class="po-role-list">
+      <li>Kullanıcı hesaplarını açar ve rollerini belirler</li>
+      <li>Dersleri açar ve öğretim elemanı atar</li>
+      <li>Öğrencileri derslere kaydeder</li>
+      <li>Hesap işlem kayıtlarını inceler</li>
+    </ul>
+  </article>
+
+</div>
+{% endblock %}

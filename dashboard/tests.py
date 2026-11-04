@@ -95,3 +95,23 @@ class InstructorCoursesTests(TestCase):
         self.client.force_login(User.objects.get(username="elif"))
         response = self.client.get(reverse("dashboard:instructor_courses"))
         self.assertEqual(response.status_code, 403)
+
+class PublicPagesTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        call_command("seed_demo", verbosity=0)
+
+    def test_public_pages_open_without_login(self):
+        for name in ["how_it_works", "roles", "program_outcomes", "about"]:
+            with self.subTest(page=name):
+                response = self.client.get(reverse(f"dashboard:{name}"))
+                self.assertEqual(response.status_code, 200)
+
+    def test_program_outcomes_page_lists_outcomes_from_database(self):
+        response = self.client.get(reverse("dashboard:program_outcomes"))
+        self.assertContains(response, "PO1")
+        self.assertContains(response, "Matematik, fen ve mühendislik bilgisi")
+
+    def test_how_it_works_shows_the_worked_example(self):
+        response = self.client.get(reverse("dashboard:how_it_works"))
+        self.assertContains(response, "85,0")

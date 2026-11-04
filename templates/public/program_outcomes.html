@@ -1,0 +1,27 @@
+{% extends "public/base_public.html" %}
+{% block title %}Program çıktıları{% endblock %}
+
+{% block eyebrow %}Program çıktıları{% endblock %}
+{% block heading %}Bölümün hedefleri{% endblock %}
+{% block lead %}Bilgisayar Mühendisliği programından mezun olan her öğrencinin kazanması beklenen yetkinlikler. Liste bölüm başkanı tarafından yönetilir.{% endblock %}
+
+{% block public_content %}
+{% if outcomes %}
+  <div class="po-outcomes po-stagger">
+    {% for outcome in outcomes %}
+      <article class="po-card po-outcome-card">
+        <span class="po-outcome-code">{{ outcome.code }}</span>
+        <p>{{ outcome.description }}</p>
+        <span class="po-outcome-meta">
+          {% if outcome.course_count %}{{ outcome.course_count }} ders katkı veriyor{% else %}Henüz bağlı ders yok{% endif %}
+        </span>
+      </article>
+    {% endfor %}
+  </div>
+{% else %}
+  <section class="po-card po-fade">
+    <h2>Program çıktıları henüz tanımlanmadı</h2>
+    <p class="po-card-sub">Bölüm başkanı program çıktılarını girdiğinde bu sayfada listelenecek.</p>
+  </section>
+{% endif %}
+{% endblock %}
