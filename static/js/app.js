@@ -1,5 +1,9 @@
 // İç sayfalar: kaydırınca menü küçülür, başlık menüye geçer, üst alan solar.
 (function () {
+    // Grafik çubuklarının yüksekliği: data-hv="85" → --hv: 85
+  document.querySelectorAll("[data-hv]").forEach(function (el) {
+    el.style.setProperty("--hv", el.getAttribute("data-hv"));
+  });
   var body = document.body;
   var hero = document.querySelector("[data-po-hero]");
   var mini = document.querySelector("[data-po-mini]");

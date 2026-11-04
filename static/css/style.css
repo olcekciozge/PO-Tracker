@@ -637,6 +637,139 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 a.po-cta { display: flex; align-items: center; justify-content: center; text-decoration: none; }
 
 /* =========================================================
+   Öğrenci PO profili
+   ========================================================= */
+.po-card { display: flex; flex-direction: column; gap: 14px; }
+.po-card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+.po-legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--po-muted); }
+.po-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.po-key { display: inline-block; width: 12px; height: 12px; border-radius: 4px; }
+.po-key-orange { background: var(--po-orange); }
+.po-key-blue { background: var(--po-blue); }
+.po-key-empty { border: 1px dashed var(--po-muted); }
+
+/* --- PO çubuk grafiği --- */
+.po-chart {
+  min-width: 680px;
+  height: 290px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 10px;
+  align-items: end;
+}
+.po-chart-col {
+  --hv: 0;   /* çubuk yüksekliği (0–100), app.js data-hv'den doldurur */
+  --i: 0;    /* sıra numarası, aşağıdaki nth-child kuralları verir */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-top: 6px;
+  border-radius: 12px;
+  color: var(--po-navy) !important;
+  text-decoration: none;
+  transition: background .2s ease;
+}
+/* Çubuklar soldan sağa sırayla büyüsün */
+.po-chart-col:nth-child(2)  { --i: 1; }
+.po-chart-col:nth-child(3)  { --i: 2; }
+.po-chart-col:nth-child(4)  { --i: 3; }
+.po-chart-col:nth-child(5)  { --i: 4; }
+.po-chart-col:nth-child(6)  { --i: 5; }
+.po-chart-col:nth-child(7)  { --i: 6; }
+.po-chart-col:nth-child(8)  { --i: 7; }
+.po-chart-col:nth-child(9)  { --i: 8; }
+.po-chart-col:nth-child(10) { --i: 9; }
+.po-chart-col:nth-child(11) { --i: 10; }
+
+.po-chart-col:hover { background: var(--po-tint); }
+.po-chart-value { font-size: 13px; font-weight: 800; animation: po-pop .6s var(--po-ease) calc(1.2s + var(--i) * .06s) both; }
+.po-chart-bar {
+  width: 100%;
+  max-width: 44px;
+  height: calc(var(--hv) * 2px);
+  border-radius: 10px 10px 4px 4px;
+  background: var(--po-blue);
+  transform-origin: bottom;
+  animation: po-grow 1s var(--po-ease) calc(.7s + var(--i) * .06s) both;
+}
+.po-chart-col.is-selected .po-chart-bar { background: var(--po-orange); }
+.po-chart-col.is-empty .po-chart-bar { height: 24px; background: none; border: 1px dashed var(--po-muted); border-bottom: 0; border-radius: 10px 10px 0 0; }
+.po-chart-col.is-empty .po-chart-value { color: var(--po-muted); }
+.po-chart-label { width: 100%; padding: 8px 0 4px; border-top: 1px solid var(--po-line); text-align: center; font-size: 12px; font-weight: 700; color: var(--po-muted); }
+.po-chart-col.is-selected .po-chart-label { color: var(--po-navy); }
+
+/* --- "Nereden geliyor?" formül kutusu --- */
+.po-formula {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: var(--po-navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+.po-formula strong { font-family: Anton, Impact, sans-serif; font-weight: 400; font-size: 28px; color: var(--po-orange); }
+
+/* --- Derslerim listesi --- */
+.po-course-list { display: flex; flex-direction: column; }
+.po-course-row { display: flex; flex-direction: column; gap: 8px; padding: 12px 0; border-bottom: 1px solid var(--po-line); }
+.po-course-row:last-child { border-bottom: 0; }
+.po-course-top { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.po-course-top span { color: var(--po-muted); white-space: nowrap; }
+.po-empty-note { margin: 0; padding: 16px; border-radius: 14px; background: var(--po-tint); color: var(--po-muted); font-size: 14px; }
+
+/* İnce lacivert ilerleme çubuğu (<progress>) */
+.po-meter {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 8px;
+  border: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--po-page);
+  transform-origin: left;
+  animation: po-grow-x 1.1s var(--po-ease) .9s both;
+}
+.po-meter::-webkit-progress-bar { background: var(--po-page); border-radius: 999px; }
+.po-meter::-webkit-progress-value { background: var(--po-navy-2); border-radius: 999px; }
+.po-meter::-moz-progress-bar { background: var(--po-navy-2); border-radius: 999px; }
+
+/* --- Dönem seçimi (lacivert alan içinde) --- */
+.po-term-form { margin: 0; }
+.po-select-dark {
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+.po-select-dark option { color: var(--po-navy); }
+
+/* Yazdırırken / PDF'e kaydederken */
+@media print {
+  .po-navbar, .po-hero-actions, .po-wave { display: none !important; }
+  .po-hero { background: #fff; color: var(--po-navy); padding-bottom: 16px; }
+  .po-hero-fx { opacity: 1; transform: none; }
+  .po-hero-lead { color: var(--po-muted); }
+  .po-main { margin-top: 0; }
+  .po-card, .po-stat { box-shadow: none; break-inside: avoid; }
+  *, *::before, *::after { animation: none !important; }
+}
+
+/* =========================================================
    Hareket hassasiyeti olanlar için animasyonları kapat
    ========================================================= */
 @media (prefers-reduced-motion: reduce) {
@@ -646,4 +779,22 @@ a.po-cta { display: flex; align-items: center; justify-content: center; text-dec
     transition: none !important;
   }
   .po-hero-fx { opacity: 1; transform: none; }
+}
+
+/* =========================================================
+   Tarayıcı düzeltmeleri (giriş ve parola sayfaları)
+   ========================================================= */
+
+/* Edge'in kendi göz ikonunu gizle; bizim butonumuz var */
+.po-field input::-ms-reveal,
+.po-field input::-ms-clear { display: none; }
+
+/* Tarayıcı otomatik doldurunca alan açık renkli kutuya dönmesin */
+.po-field input:-webkit-autofill,
+.po-field input:-webkit-autofill:hover,
+.po-field input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
+  caret-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px #5d6886 inset;
+  transition: background-color 9999s ease-out;
 }

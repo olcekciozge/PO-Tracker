@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}PO Profilim{% endblock %}
+
+{% block eyebrow %}Öğrenci · PO profili{% endblock %}
+{% block heading %}Program Çıktısı Profilim{% endblock %}
+{% block lead %}Kayıtlı olduğunuz derslerden gelen skorlar, 0–100 ölçeğinde.{% endblock %}
+
+{% block hero_actions %}
+  {% if terms|length > 1 %}
+    <form method="get" class="po-term-form">
+      <label for="term" class="visually-hidden">Dönem</label>
+      <select id="term" name="term" class="po-select-dark" onchange="this.form.submit()">
+        <option value="">Tüm dönemler</option>
+        {% for t in terms %}
+          {% if t == term %}<option value="{{ t }}" selected>{{ t }}</option>{% else %}<option value="{{ t }}">{{ t }}</option>{% endif %}
+        {% endfor %}
+      </select>
+    </form>
+  {% endif %}
+  <button type="button" class="po-btn po-btn-orange" onclick="window.print()">Raporu yazdır / PDF</button>
+{% endblock %}
+
+{% block content %}
+{% if not courses %}
+
+  <section class="po-card po-fade">
+    <h2>Henüz bir derse kayıtlı değilsiniz</h2>
+    <p class="po-card-sub">Derslere kaydınız yapılıp notlar girildiğinde PO profiliniz burada oluşacak.</p>
+  </section>
+
+{% else %}
+
+  <div class="po-stats">
+    <div class="po-stat po-stat-blue po-pop" style="--delay: .6s">
+      <span>Verisi olan PO</span>
+      <strong>{{ with_data_count }} / {{ pos|length }}</strong>
+    </div>
+    <div class="po-stat po-stat-olive po-pop" style="--delay: .7s">
+      <span>En yüksek{% if best %} · {{ best.po.code }}{% endif %}</span>
+      <strong>{% if best %}{{ best.score|floatformat:1 }}{% else %}—{% endif %}</strong>
+    </div>
+    <div class="po-stat po-pop" style="--delay: .8s">
+      <span>Kayıtlı ders</span>
+      <strong>{{ courses|length }}</strong>
+    </div>
+  </div>
+
+  <section class="po-card po-fade" style="--delay: .5s">
+    <div class="po-card-head">
+      <h2>PO skorları</h2>
+      <div class="po-legend">
+        <span><i class="po-key po-key-orange"></i>Seçili</span>
+        <span><i class="po-key po-key-blue"></i>Verisi var</span>
+        <span><i class="po-key po-key-empty"></i>Henüz katkı yok</span>
+      </div>
+    </div>
+    <p class="po-card-sub">Ayrıntısını görmek için bir çubuğa tıklayın.</p>
+
+    <div class="po-table-wrap">
+      <div class="po-chart">
+        {% for p in pos %}
+          <a class="po-chart-col{% if p.selected %} is-selected{% endif %}{% if p.score is None %} is-empty{% endif %}"
+             href="?{% if term %}term={{ term|urlencode }}&amp;{% endif %}po={{ p.po.code|urlencode }}#detay"
+             aria-label="{{ p.po.code }}: {% if p.score is None %}veri yok{% else %}{{ p.score|floatformat:1 }}{% endif %}"
+                          data-hv="{{ p.height }}">
+            <span class="po-chart-value">{% if p.score is None %}—{% else %}{{ p.score|floatformat:1 }}{% endif %}</span>
+            <span class="po-chart-bar"></span>
+            <span class="po-chart-label">{{ p.po.code }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <div class="po-grid">
+    <section class="po-card po-fade" id="detay" style="--delay: .7s">
+      {% if selected %}
+        <h2>{{ selected.po.code }} nereden geliyor?</h2>
+        <p class="po-card-sub">{{ selected.po.description|truncatechars:110 }}</p>
+
+        {% if selected.breakdown %}
+          <div class="po-table-wrap">
+            <table class="po-table">
+              <thead>
+                <tr><th>Ders · LO</th><th>Ağırlık (1–5)</th><th class="text-end">LO skoru</th></tr>
+              </thead>
+              <tbody>
+                {% for row in selected.breakdown %}
+                  <tr>
+                    <td><strong>{{ row.course.code }} · {{ row.lo.code }}</strong></td>
+                    <td>{{ row.weight }}</td>
+                    <td class="text-end">{% if row.score is None %}—{% else %}{{ row.score|floatformat:1 }}{% endif %}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% if formula %}
+            <div class="po-formula">
+              <span>{{ selected.po.code }} = {{ formula }}</span>
+              <strong>{{ selected.score|floatformat:1 }}</strong>
+            </div>
+          {% endif %}
+        {% else %}
+          <p class="po-empty-note">Bu program çıktısına henüz hiçbir dersiniz katkı vermiyor.</p>
+        {% endif %}
+      {% endif %}
+    </section>
+
+    <section class="po-card po-fade" style="--delay: .8s">
+      <h2>Derslerim</h2>
+      <div class="po-course-list">
+        {% for row in courses %}
+          <div class="po-course-row">
+            <div class="po-course-top">
+              <strong>{{ row.course.code }} {{ row.course.title }} · {{ row.course.term }}</strong>
+              <span>{% if row.graded %}{{ row.graded }} / {{ row.total }} not girildi{% else %}Henüz not yok{% endif %}</span>
+            </div>
+            <progress class="po-meter" value="{{ row.graded }}" max="{{ row.total|default:1 }}" aria-label="{{ row.course.code }} not ilerlemesi">{{ row.percent }}%</progress>
+          </div>
+        {% endfor %}
+      </div>
+    </section>
+  </div>
+
+{% endif %}
+{% endblock %}
