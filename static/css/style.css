@@ -104,6 +104,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  line-height: 1.4;
   opacity: 0;
   font-family: Anton, Impact, sans-serif;
   font-size: 18px;
@@ -179,7 +180,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   background: var(--po-navy);
   color: #fff;
   overflow: hidden;
-  padding-bottom: 110px;
+  padding-bottom: 90px;
 }
 .po-hero-fx {
   opacity: calc(1 - var(--hero-p) * 1.3);
@@ -213,11 +214,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .po-eyebrow:empty { display: none; }
 .po-hero-title {
   margin: 0;
+  padding-top: .14em;
   overflow: hidden;
   font-family: Anton, Impact, sans-serif;
   font-weight: 400;
   font-size: clamp(44px, 6.5vw, 80px);
-  line-height: 1.02;
+  line-height: 1.08;
   text-transform: uppercase;
   letter-spacing: 0;
 }
@@ -234,7 +236,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   position: relative;
   z-index: 5;
   max-width: 1160px;
-  margin: -64px auto 0;
+  margin: 24px auto 0;
   padding: 0 24px 64px;
   display: flex;
   flex-direction: column;
@@ -798,3 +800,108 @@ a.po-cta { display: flex; align-items: center; justify-content: center; text-dec
   -webkit-box-shadow: 0 0 0 1000px #5d6886 inset;
   transition: background-color 9999s ease-out;
 }
+
+/* =========================================================
+   Hesap sayfaları: ana sayfa kutucukları, profil, formlar
+   ========================================================= */
+
+/* --- Ana sayfa kutucukları --- */
+.po-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.po-tiles.po-stagger > * { animation-fill-mode: backwards; }  /* animasyon bitince hover çalışsın */
+.po-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 210px;
+  padding: 24px;
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid var(--po-line);
+  box-shadow: var(--po-shadow);
+  color: var(--po-navy) !important;
+  text-decoration: none;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.po-tile:hover { transform: translateY(-4px); box-shadow: 0 28px 50px rgba(27, 38, 70, .14); }
+.po-tile h2 { margin: 0; font-size: 18px; font-weight: 800; }
+.po-tile p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--po-muted); }
+.po-tile-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: var(--po-tint);
+  color: var(--po-navy-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.po-tile-icon svg { width: 22px; height: 22px; }
+.po-tile-go { margin-top: auto; font-size: 13px; font-weight: 800; color: var(--po-navy-2); }
+.po-tile-go span { display: inline-block; transition: transform .2s ease; }
+.po-tile:hover .po-tile-go span { transform: translateX(4px); }
+.po-tile-accent { background: var(--po-navy); border-color: var(--po-navy); color: #fff !important; }
+.po-tile-accent p { color: rgba(255, 255, 255, .75); }
+.po-tile-accent .po-tile-icon { background: var(--po-orange); color: #fff; }
+.po-tile-accent .po-tile-go { color: var(--po-orange); }
+
+/* --- Profil kartı --- */
+.po-id { display: flex; align-items: center; gap: 14px; }
+.po-id strong { display: block; font-size: 17px; }
+.po-id span { font-size: 13px; font-weight: 600; color: var(--po-muted); }
+.po-avatar-lg { width: 56px; height: 56px; font-size: 20px; }
+.po-details {
+  margin: 0;
+  padding: 16px 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px 16px;
+  border-top: 1px solid var(--po-line);
+  border-bottom: 1px solid var(--po-line);
+  font-size: 14px;
+}
+.po-details dt { color: var(--po-muted); font-weight: 600; }
+.po-details dd { margin: 0; font-weight: 700; text-align: right; }
+.po-card > .po-btn { align-self: flex-start; }
+
+/* --- Açık renkli formlar (sayfa içi) --- */
+.po-card-narrow { width: 100%; max-width: 560px; }
+.po-form { display: flex; flex-direction: column; gap: 18px; margin: 0; }
+.po-form-field { display: flex; flex-direction: column; gap: 6px; }
+.po-form-field > label { font-size: 13px; font-weight: 700; }
+.po-form input[type="text"],
+.po-form input[type="email"],
+.po-form input[type="password"] {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid var(--po-line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--po-navy);
+  font-family: inherit;
+  font-size: 15px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.po-form input:hover { border-color: #cfc9bc; }
+.po-form input:focus { outline: none; border-color: var(--po-blue); box-shadow: 0 0 0 4px rgba(102, 130, 178, .2); }
+.po-form .po-input-wrap input { padding-right: 52px; }
+.po-form-error { font-size: 13px; font-weight: 600; color: #a1261b; }
+.po-form-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.po-form > .po-btn { align-self: flex-start; }
+
+.po-form .po-reveal { color: var(--po-muted); }
+.po-form .po-reveal:hover { color: var(--po-navy); background: var(--po-tint); }
+.po-form .po-strength span { background: var(--po-line); }
+.po-form .po-strength-label { color: var(--po-muted); }
+.po-form .po-match { color: var(--po-muted); }
+.po-form .po-match.is-ok { color: var(--po-olive); }
+.po-form .po-match.is-bad { color: #a1261b; }
+.po-form .po-help { color: var(--po-muted); }
+.po-form .po-help summary { color: var(--po-navy); }
+.po-form input::-ms-reveal,
+.po-form input::-ms-clear { display: none; }
+
+/* --- "Tamamlandı" kartı --- */
+.po-done { align-items: center; text-align: center; margin: 0 auto; }
+.po-done .po-auth-icon { margin: 0; }
+.po-done .po-btn { align-self: center; }
