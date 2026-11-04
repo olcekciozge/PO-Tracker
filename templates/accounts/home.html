@@ -15,7 +15,16 @@
       </span>
       <h2>PO Profilim</h2>
       <p>Program çıktısı skorlarınızı ve her skorun hangi dersten geldiğini görün.</p>
-      <span class="po-tile-go">Profili aç <span aria-hidden="true">→</span></span>
+            <span class="po-tile-go">Profili aç <span aria-hidden="true">→</span></span>
+    </a>
+  {% elif request.user.is_instructor %}
+    <a class="po-tile po-tile-accent" href="{% url 'dashboard:instructor_courses' %}">
+      <span class="po-tile-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z"></path><path d="M4 21V5"></path><path d="M9 8h6"></path></svg>
+      </span>
+      <h2>Derslerim</h2>
+      <p>Derslerinizin kurulum durumunu ve girilen notları görün.</p>
+      <span class="po-tile-go">Dersleri aç <span aria-hidden="true">→</span></span>
     </a>
   {% endif %}
 

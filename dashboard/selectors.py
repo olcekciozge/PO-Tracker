@@ -1,8 +1,10 @@
 """Dashboard sayfaları için okuma sorguları. Hesaplama grades.scoring'den gelir."""
-from courses.models import Enrollment
+from django.db.models import Count, Sum
+
+from courses.models import Assessment, Course, Enrollment
 from grades.models import Grade
 from grades.scoring import lo_score, po_score
-from outcomes.models import LOPO, AssessmentLO, ProgramOutcome
+from outcomes.models import LOPO, AssessmentLO, LearningOutcome, ProgramOutcome
 
 
 def student_po_profile(student, term=None):
@@ -59,3 +61,57 @@ def student_po_profile(student, term=None):
         Enrollment.objects.filter(student=student).values_list("course__term", flat=True)
     ))
     return {"pos": pos, "courses": course_rows, "terms": terms}
+
+
+def instructor_courses(instructor):
+    """Eğitmenin dersleri: sayılar, girilen notlar ve kurulum kontrol listesi."""
+    courses = list(
+        Course.objects.filter(instructor=instructor)
+        .annotate(
+            student_count=Count("enrollments", distinct=True),
+            assessment_count=Count("assessments", distinct=True),
+            lo_count=Count("learning_outcomes", distinct=True),
+        )
+        .order_by("code", "term")
+    )
+
+    def per_course(queryset, value):
+        return {row["course"]: row["value"] for row in queryset.values("course").annotate(value=value)}
+
+    weight_totals = per_course(Assessment.objects.filter(course__in=courses), Sum("weight"))
+    unlinked_assessments = per_course(
+        Assessment.objects.filter(course__in=courses, lo_links__isnull=True), Count("id")
+    )
+    unlinked_los = per_course(
+        LearningOutcome.objects.filter(course__in=courses, po_links__isnull=True), Count("id")
+    )
+    grade_counts = {
+        row["assessment__course"]: row["value"]
+        for row in Grade.objects.filter(assessment__course__in=courses)
+        .values("assessment__course")
+        .annotate(value=Count("id"))
+    }
+
+    cards = []
+    for course in courses:
+        weight_total = float(weight_totals.get(course.id) or 0)
+        checks = [
+            {"label": "Değerlendirme ağırlıkları toplam %100",
+             "ok": course.assessment_count > 0 and abs(weight_total - 100) < 0.01},
+            {"label": "Öğrenme çıktıları (LO) tanımlı",
+             "ok": course.lo_count > 0},
+            {"label": "Her değerlendirme bir LO'ya bağlı",
+             "ok": course.assessment_count > 0 and not unlinked_assessments.get(course.id)},
+            {"label": "Her LO bir program çıktısına (PO) bağlı",
+             "ok": course.lo_count > 0 and not unlinked_los.get(course.id)},
+        ]
+        graded = grade_counts.get(course.id, 0)
+        expected = course.student_count * course.assessment_count
+        cards.append({
+            "course": course,
+            "checks": checks,
+            "setup_ok": all(check["ok"] for check in checks),
+            "graded": graded,
+            "expected": expected,
+        })
+    return cards

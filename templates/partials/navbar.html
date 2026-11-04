@@ -20,7 +20,7 @@
             <a class="po-nav-link" href="{% url 'dashboard:student_profile' %}" aria-current="{% if url_name == 'student_profile' %}page{% else %}false{% endif %}">PO Profilim</a>
             <a class="po-nav-link" href="#">Notlarım</a>
           {% elif request.user.is_instructor %}
-            <a class="po-nav-link" href="#">Derslerim</a>
+            <a class="po-nav-link" href="{% url 'dashboard:instructor_courses' %}" aria-current="{% if url_name == 'instructor_courses' %}page{% else %}false{% endif %}">Derslerim</a>
             <a class="po-nav-link" href="#">Program Çıktıları</a>
           {% elif request.user.is_department_head %}
             <a class="po-nav-link" href="#">Genel Bakış</a>
