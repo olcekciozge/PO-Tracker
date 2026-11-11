@@ -3,6 +3,11 @@
 Owner: Batuhan (architecture & infrastructure). Diagram sources are in [`diagrams/`](diagrams/)
 as Mermaid files (`*.mmd`); the SVG/PNG files next to them are rendered from those sources.
 
+**Presentation versions (12 Nov):** simplified 16:9 diagrams in the style of the course slides are in
+[`diagrams/presentation/`](diagrams/presentation/): [architecture](diagrams/presentation/architecture.png),
+[class diagram](diagrams/presentation/class-diagram.png) and [tooling & workflow](diagrams/presentation/tooling.png).
+Regenerate them with `node docs/diagrams/presentation/generate.js`. The detailed diagrams below remain the reference.
+
 ## 1. Architecture diagram
 
 ![System architecture](diagrams/architecture.svg)
