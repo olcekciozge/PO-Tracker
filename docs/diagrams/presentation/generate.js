@@ -157,9 +157,9 @@ ${attrs.map((a, i) => text(x + 18, y + hh + 30 + i * ah, [a], { size: 24, anchor
   b += `<line x1="800" y1="216" x2="800" y2="160" stroke="${C.ciLine}" stroke-width="4" marker-end="url(#okC)"/>`;
   b += text(816, 194, ['runs on every push & PR'], { size: 20, anchor: 'start', fill: C.soft });
   // repository
-  b += rect(500, 220, 600, 118, C.repoFill, C.repoLine);
+  b += rect(450, 220, 700, 118, C.repoFill, C.repoLine);
   b += text(800, 266, ['Repository: olcekciozge/PO-Tracker'], { size: 28, weight: 'bold', fill: C.ink });
-  b += text(800, 306, ['main + one branch per member · 7 merged PRs'], { size: 23, fill: C.ink });
+  b += text(800, 306, ['main + one branch per member · merged via pull requests'], { size: 23, fill: C.ink });
   // members
   const devs = [['Rümeysa', 'data model'], ['Batuhan', 'architecture, CI'], ['Buğra', 'accounts, Scrum'], ['Özge', 'UI, dashboard']];
   devs.forEach(([n, r], i) => {
