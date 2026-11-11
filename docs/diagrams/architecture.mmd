@@ -1,0 +1,51 @@
+---
+config:
+  layout: elk
+---
+flowchart TB
+    users["Users<br/>Student · Instructor · Department Head · Admin"]
+    browser["Web browser<br/>server-rendered HTML pages + charts"]
+    obs["OBS (student information system)<br/>Excel export of grades"]
+
+    subgraph server["Django web application (Python)"]
+        direction TB
+        mw["URL routing + middleware<br/>session · CSRF · authentication · role checks"]
+        subgraph apps["Django apps"]
+            direction LR
+            acc["accounts<br/>users · roles<br/>login · audit log"]
+            crs["courses<br/>courses · assessments<br/>enrollments"]
+            out["outcomes<br/>PO · LO<br/>weight tables"]
+            grd["grades<br/>grades<br/>score engine"]
+            dsh["dashboard<br/>role-based pages<br/>PO charts"]
+        end
+        orm["Django ORM<br/>transactions · constraints · migrations"]
+        mw --> apps --> orm
+    end
+
+    subgraph data["Data layer"]
+        direction LR
+        db[("PostgreSQL 16<br/>primary database")]
+        replica[("Read replica<br/>reports · dashboards")]
+        cache[("Redis cache<br/>computed PO profiles")]
+        files[("File storage<br/>uploaded Excel / syllabus")]
+    end
+
+    subgraph async["Background services"]
+        direction LR
+        worker["Background worker<br/>bulk grade import · syllabus parsing · PDF reports"]
+        mail["Email service (SMTP)<br/>password reset · notifications"]
+    end
+
+    users --> browser -->|HTTPS| mw
+    orm --> db
+    db -. streaming replication .-> replica
+    orm -. read-only queries .-> replica
+    apps -. cache .-> cache
+    apps -. enqueue job .-> worker
+    obs -. upload .-> browser
+    worker -.-> files
+    worker -. writes grades .-> db
+    worker -.-> mail
+
+    classDef planned stroke-dasharray: 6 4,fill:#f4f4f4,color:#444
+    class replica,cache,files,worker,mail,obs planned

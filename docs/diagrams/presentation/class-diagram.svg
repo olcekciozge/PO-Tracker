@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" font-family="Menlo, Consolas, 'DejaVu Sans Mono', monospace">
+<defs>
+  <marker id="ok" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#000"/></marker>
+  <marker id="okY" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#F7B500"/></marker>
+  <marker id="okG" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="#0A7A0A"/></marker>
+</defs>
+<rect width="1600" height="900" fill="#fff"/>
+<rect x="40" y="360" width="280" height="140" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="40" y1="412" x2="320" y2="412" stroke="#000" stroke-width="2.5"/>
+<text x="180" y="396" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">User</text>
+<text x="58" y="442" font-size="24" font-weight="normal" fill="#000" text-anchor="start">username</text>
+<text x="58" y="478" font-size="24" font-weight="normal" fill="#000" text-anchor="start">role</text><rect x="400" y="70" width="260" height="68" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="400" y1="122" x2="660" y2="122" stroke="#000" stroke-width="2.5"/>
+<text x="530" y="106" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">Enrollment</text>
+<rect x="560" y="360" width="280" height="176" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="560" y1="412" x2="840" y2="412" stroke="#000" stroke-width="2.5"/>
+<text x="700" y="396" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">Course</text>
+<text x="578" y="442" font-size="24" font-weight="normal" fill="#000" text-anchor="start">code</text>
+<text x="578" y="478" font-size="24" font-weight="normal" fill="#000" text-anchor="start">title</text>
+<text x="578" y="514" font-size="24" font-weight="normal" fill="#000" text-anchor="start">term</text><rect x="300" y="680" width="240" height="104" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="300" y1="732" x2="540" y2="732" stroke="#000" stroke-width="2.5"/>
+<text x="420" y="716" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">Grade</text>
+<text x="318" y="762" font-size="24" font-weight="normal" fill="#000" text-anchor="start">score 0–100</text><rect x="660" y="680" width="300" height="140" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="660" y1="732" x2="960" y2="732" stroke="#000" stroke-width="2.5"/>
+<text x="810" y="716" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">Assessment</text>
+<text x="678" y="762" font-size="24" font-weight="normal" fill="#000" text-anchor="start">name</text>
+<text x="678" y="798" font-size="24" font-weight="normal" fill="#000" text-anchor="start">weight %</text><rect x="990" y="360" width="300" height="140" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="990" y1="412" x2="1290" y2="412" stroke="#000" stroke-width="2.5"/>
+<text x="1140" y="396" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">LearningOutcome</text>
+<text x="1008" y="442" font-size="24" font-weight="normal" fill="#000" text-anchor="start">code</text>
+<text x="1008" y="478" font-size="24" font-weight="normal" fill="#000" text-anchor="start">description</text><rect x="1080" y="680" width="280" height="104" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="1080" y1="732" x2="1360" y2="732" stroke="#000" stroke-width="2.5"/>
+<text x="1220" y="716" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">AssessmentLO</text>
+<text x="1098" y="762" font-size="24" font-weight="normal" fill="#000" text-anchor="start">weight %</text><rect x="1310" y="60" width="270" height="140" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="1310" y1="112" x2="1580" y2="112" stroke="#000" stroke-width="2.5"/>
+<text x="1445" y="96" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">ProgramOutcome</text>
+<text x="1328" y="142" font-size="24" font-weight="normal" fill="#000" text-anchor="start">code (PO1–PO11)</text>
+<text x="1328" y="178" font-size="24" font-weight="normal" fill="#000" text-anchor="start">description</text><rect x="1390" y="360" width="190" height="104" fill="#fff" stroke="#000" stroke-width="2.5"/>
+<line x1="1390" y1="412" x2="1580" y2="412" stroke="#000" stroke-width="2.5"/>
+<text x="1485" y="396" font-size="28" font-weight="bold" fill="#000" text-anchor="middle">LOPO</text>
+<text x="1408" y="442" font-size="24" font-weight="normal" fill="#000" text-anchor="start">weight 1–5</text><path d="M320,420 L560,420" fill="none" stroke="#000" stroke-width="2.5"/><text x="342" y="410" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="538" y="410" font-size="30" font-weight="bold" fill="#000" text-anchor="end">*</text><text x="440" y="405" font-size="22" font-weight="normal" fill="#000" text-anchor="middle" font-style="italic">teaches</text><path d="M180,360 L180,105 L400,105" fill="none" stroke="#000" stroke-width="2.5"/><text x="196" y="326" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="378" y="95" font-size="30" font-weight="bold" fill="#000" text-anchor="end">*</text><path d="M700,360 L700,104 L660,104" fill="none" stroke="#000" stroke-width="2.5"/><text x="716" y="326" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="682" y="94" font-size="30" font-weight="bold" fill="#000" text-anchor="start">*</text><path d="M180,500 L180,740 L300,740" fill="none" stroke="#000" stroke-width="2.5"/><text x="196" y="534" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="278" y="730" font-size="30" font-weight="bold" fill="#000" text-anchor="end">*</text><path d="M760,536 L760,680" fill="none" stroke="#000" stroke-width="2.5"/><text x="776" y="570" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="776" y="646" font-size="30" font-weight="bold" fill="#000" text-anchor="start">*</text><path d="M660,750 L540,750" fill="none" stroke="#000" stroke-width="2.5"/><text x="638" y="740" font-size="30" font-weight="bold" fill="#000" text-anchor="end">1</text><text x="562" y="740" font-size="30" font-weight="bold" fill="#000" text-anchor="start">*</text><path d="M840,430 L990,430" fill="none" stroke="#000" stroke-width="2.5"/><text x="862" y="420" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="968" y="420" font-size="30" font-weight="bold" fill="#000" text-anchor="end">*</text><path d="M960,750 L1080,750" fill="none" stroke="#000" stroke-width="2.5"/><text x="982" y="740" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="1058" y="740" font-size="30" font-weight="bold" fill="#000" text-anchor="end">*</text><path d="M1180,500 L1180,680" fill="none" stroke="#000" stroke-width="2.5"/><text x="1196" y="534" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="1196" y="646" font-size="30" font-weight="bold" fill="#000" text-anchor="start">*</text><path d="M1290,420 L1390,420" fill="none" stroke="#000" stroke-width="2.5"/><text x="1312" y="410" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="1368" y="410" font-size="30" font-weight="bold" fill="#000" text-anchor="end">*</text><path d="M1485,196 L1485,360" fill="none" stroke="#000" stroke-width="2.5"/><text x="1501" y="230" font-size="30" font-weight="bold" fill="#000" text-anchor="start">1</text><text x="1501" y="326" font-size="30" font-weight="bold" fill="#000" text-anchor="start">*</text>
+</svg>
