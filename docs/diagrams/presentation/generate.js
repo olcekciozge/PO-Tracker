@@ -62,16 +62,15 @@ const line = (x1, y1, x2, y2, { dash = false, arrow = true, sw = 2.5 } = {}) =>
     b += line(c.cx, 280, c.cx, ly, { dash: c.dash, arrow: false });
     b += box(c.cx - lw / 2, ly, lw, lh, c.label, { size: 25, dash: c.dash });
     // service frame (rounded) + cylinder
-    b += `<rect x="${c.cx - 165}" y="590" width="330" height="270" rx="22" fill="#fff" stroke="#000" stroke-width="3"${c.dash ? ' stroke-dasharray="10 7"' : ''}/>`;
-    b += text(c.cx, 630, [c.svc], { size: 26 });
-    b += line(c.cx, ly + lh, c.cx, 588, { dash: c.dash });
-    b += cylinder(c.cx, 660, 250, 170, c.store, { dash: c.dash, size: 28 });
+    b += `<rect x="${c.cx - 165}" y="555" width="330" height="262" rx="22" fill="#fff" stroke="#000" stroke-width="3"${c.dash ? ' stroke-dasharray="10 7"' : ''}/>`;
+    b += text(c.cx, 595, [c.svc], { size: 26 });
+    b += line(c.cx, ly + lh, c.cx, 553, { dash: c.dash });
+    b += cylinder(c.cx, 618, 250, 170, c.store, { dash: c.dash, size: 28 });
   }
-  // replikasyon oku: PostgreSQL → read replica
-  b += `<path d="M742,790 L888,790" fill="none" stroke="#000" stroke-width="2.5" stroke-dasharray="10 7" marker-end="url(#ok)"/>`;
-  b += text(815, 775, ['replication'], { size: 20 });
-  b += `<line x1="1180" y1="40" x2="1240" y2="40" stroke="#000" stroke-width="2.5"/>`;
-  fs.writeFileSync(path.join(OUT, 'architecture.svg'), svg(b.replace(/<line x1="1180" y1="40"[^>]*\/>/, ''), MONO));
+  // replication: PostgreSQL -> read replica, routed below the service frames
+  b += `<path d="M615,788 L615,850 L1015,850 L1015,794" fill="none" stroke="#000" stroke-width="2.5" stroke-dasharray="10 7" marker-end="url(#ok)"/>`;
+  b += text(815, 880, ['replication'], { size: 22 });
+  fs.writeFileSync(path.join(OUT, 'architecture.svg'), svg(b, MONO));
 }
 
 /* ---------- 2) Simplified class diagram ---------- */
@@ -137,37 +136,49 @@ ${attrs.map((a, i) => text(x + 18, y + hh + 30 + i * ah, [a], { size: 24, anchor
 /* ---------- 3) Tooling and workflow (CSE 311) ---------- */
 {
   let b = '';
-  const BLUE = '#00A2FF', BLUE_D = '#00508C', ORANGE = '#F7B500', ORANGE_D = '#F08C00', GREEN = '#62D836', GREEN_D = '#0A7A0A', PINK = '#F185B9';
-  // GitHub + CI grey frame
-  b += `<rect x="300" y="40" width="1000" height="440" rx="40" fill="#D0D0D0" stroke="#888" stroke-width="4" stroke-dasharray="6 8"/>`;
-  b += text(330, 100, ['GitHub', 'does it all'], { size: 28, anchor: 'start', fill: '#fff', weight: 'bold' });
+  // calm palette, same structure as the CSE 311 slide (IDEs -> GitHub -> CI, shared channel)
+  const C = {
+    frame: '#F1F3F6', frameLine: '#B9C0CB', ink: '#1F2933', soft: '#52606D',
+    ciFill: '#E4F4EA', ciLine: '#2F855A', repoFill: '#FFF3DC', repoLine: '#C98A00',
+    devFill: '#E6F0FB', devLine: '#2B6CB0', testFill: '#FDE8E6', testLine: '#C0392B',
+    bandFill: '#FBEAF2', bandLine: '#C2578A', arrow: '#C98A00',
+  };
+  const rect = (x, y, w, h, fill, stroke, rx = 14, sw = 2.5, dash = '') =>
+    `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${rx}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"${dash ? ` stroke-dasharray="${dash}"` : ''}/>`;
+  b += `<defs><marker id="okA" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="${C.arrow}"/></marker>
+<marker id="okC" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L12,6 L0,12 z" fill="${C.ciLine}"/></marker></defs>`;
+  // GitHub frame
+  b += rect(380, 24, 840, 340, C.frame, C.frameLine, 28, 2.5, '8 7');
+  b += text(408, 64, ['GitHub'], { size: 24, anchor: 'start', fill: C.soft, weight: 'bold' });
   // CI
-  b += `<rect x="540" y="60" width="520" height="140" rx="22" fill="${GREEN}" stroke="${GREEN_D}" stroke-width="4"/>`;
-  b += text(800, 105, ['GitHub Actions CI', 'every push & PR → PostgreSQL 16', 'Django checks + 143 tests ✓'], { size: 26, fill: '#fff', weight: 'bold' });
-  b += `<line x1="800" y1="290" x2="800" y2="208" stroke="${GREEN_D}" stroke-width="7" marker-end="url(#okG)"/>`;
-  // GitHub repo
-  b += `<rect x="520" y="290" width="560" height="160" fill="${ORANGE}" stroke="${ORANGE_D}" stroke-width="4"/>`;
-  b += text(800, 335, ['GitHub: olcekciozge/PO-Tracker'], { size: 28, weight: 'bold' });
-  b += text(800, 375, ['main + one branch per member', '7 Pull Requests merged, CI green'], { size: 25, fill: '#fff' });
-  // communication band
-  // four team members
+  b += rect(520, 50, 560, 104, C.ciFill, C.ciLine);
+  b += text(800, 92, ['GitHub Actions CI'], { size: 28, weight: 'bold', fill: C.ink });
+  b += text(800, 130, ['PostgreSQL 16 · Django checks · 143 tests'], { size: 23, fill: C.ink });
+  b += `<line x1="800" y1="216" x2="800" y2="160" stroke="${C.ciLine}" stroke-width="4" marker-end="url(#okC)"/>`;
+  b += text(816, 194, ['runs on every push & PR'], { size: 20, anchor: 'start', fill: C.soft });
+  // repository
+  b += rect(500, 220, 600, 118, C.repoFill, C.repoLine);
+  b += text(800, 266, ['Repository: olcekciozge/PO-Tracker'], { size: 28, weight: 'bold', fill: C.ink });
+  b += text(800, 306, ['main + one branch per member · 7 merged PRs'], { size: 23, fill: C.ink });
+  // members
   const devs = [['Rümeysa', 'data model'], ['Batuhan', 'architecture, CI'], ['Buğra', 'accounts, Scrum'], ['Özge', 'UI, dashboard']];
   devs.forEach(([n, r], i) => {
-    const x = 160 + i * 330, y = 660;
-    b += `<path d="M${x + 150},${y} C${x + 150},560 ${700 + i * 70},520 ${640 + i * 110},458" fill="none" stroke="${ORANGE}" stroke-width="6" marker-end="url(#okY)" marker-start="url(#okY)"/>`;
-    b += `<rect x="${x}" y="${y}" width="300" height="200" fill="${BLUE}" stroke="${BLUE_D}" stroke-width="4"/>`;
-    b += text(x + 18, y + 70, ['IDE #' + (i + 1), n], { size: 28, anchor: 'start', fill: '#fff', weight: 'bold' });
-    b += text(x + 18, y + 142, [r], { size: 23, anchor: 'start', fill: '#fff', weight: 'bold' });
-    b += `<circle cx="${x + 262}" cy="${y + 168}" r="26" fill="#EE2A17"/>`;
-    b += text(x + 262, y + 176, ['<>'], { size: 22, fill: '#fff', weight: 'bold' });
+    const x = 130 + i * 350, y = 530, cx = x + 150, tx = 590 + i * 140;
+    b += `<line x1="${cx}" y1="${y - 6}" x2="${tx}" y2="${344}" stroke="${C.arrow}" stroke-width="3.5" marker-start="url(#okA)" marker-end="url(#okA)"/>`;
+    b += rect(x, y, 300, 150, C.devFill, C.devLine);
+    b += text(x + 24, y + 52, [n], { size: 30, anchor: 'start', weight: 'bold', fill: C.ink });
+    b += text(x + 24, y + 90, [r], { size: 23, anchor: 'start', fill: C.soft });
+    b += rect(x + 24, y + 108, 150, 30, C.testFill, C.testLine, 15, 2);
+    b += text(x + 99, y + 130, ['local unit tests'], { size: 17, fill: C.testLine, weight: 'bold' });
+    b += `<line x1="${cx}" y1="${y + 150}" x2="${cx}" y2="${720}" stroke="${C.bandLine}" stroke-width="2.5"/>`;
   });
-  b += text(1380, 560, ['push · pull · PR'], { size: 26, weight: 'bold', anchor: 'end' });
-  
-  b += `<circle cx="70" cy="560" r="26" fill="#EE2A17"/>` + text(70, 569, ['<>'], { size: 22, fill: '#fff', weight: 'bold' });
-  b += text(105, 569, ['= unit tests'], { size: 24, anchor: 'start', weight: 'bold' });
-  // semi-transparent band drawn over the member boxes
-  b += `<rect x="150" y="625" width="1300" height="62" rx="12" fill="${PINK}" fill-opacity="0.55" stroke="#C2407E" stroke-width="3"/>`;
-  b += text(800, 667, ['WhatsApp group · Scrum backlog & sprints (Scrum master: Buğra)'], { size: 27, weight: 'bold' });
+  // label for the push/pull arrows
+  b += rect(690, 420, 220, 38, '#fff', '#fff', 8, 0);
+  b += text(800, 446, ['push · pull request'], { size: 22, weight: 'bold', fill: C.arrow });
+  // shared communication band
+  b += rect(130, 720, 1350, 64, C.bandFill, C.bandLine, 32);
+  b += text(805, 761, ['WhatsApp group  ·  task board with backlog & sprints'], { size: 25, weight: 'bold', fill: C.ink });
+  b += text(805, 840, ['Each member works in their own IDE on their own branch; code reaches main only through a pull request.'], { size: 21, fill: C.soft });
   fs.writeFileSync(path.join(OUT, 'tooling.svg'), svg(b, SANS));
 }
 console.log('ok');
